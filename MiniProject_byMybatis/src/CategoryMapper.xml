@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.scit.dao.CategoryMapper">
+	
+	<insert id="insertCategory" parameterType="CategoryVO">
+		INSERT INTO
+		categories_m
+		(categorynum, categoryname)
+		VALUES
+		(categories_m_seq.nextval, #{categoryname})
+	</insert>
+
+
+	<select id="selectAllCategory" resultType="CategoryVO">
+		SELECT * FROM categories_m
+	</select>
+	
+	<select id="selectOneCategory" parameterType="int" resultType="CategoryVO">
+		SELECT categorynum, categoryname
+		FROM categories_m
+		WHERE categorynum = #{categorynum}
+	</select>
+
+
+	<update id="updateCategory" parameterType="CategoryVO">
+		UPDATE categories_m
+		SET categoryname = #{categoryname}
+		WHERE categorynum = #{categorynum}
+	</update>
+
+
+	<delete id="deleteCategory" parameterType="int">
+		DELETE FROM categories_m
+		WHERE categorynum = #{categorynum}
+	</delete>
+
+</mapper>
+
+<!--
+	// C 
+	public int insertCategory(CategoryVO vo); 
+	// R 
+	public List<CategoryVO> selectAllCategory(); 
+	// U 
+	public int updateCategory(CategoryVO vo); 
+	// D 
+	public int deleteCategory(int categorynum); -->
