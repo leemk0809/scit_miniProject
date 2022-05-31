@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.scit.dao.BrandMapper">
+	<select id="selectAllBrand" resultType="BrandVO" >
+		SELECT brandnum, brandname, managername, email
+		FROM brand_m
+	</select>
+
+	<update id="updateBrand" parameterType="BrandVO">
+		UPDATE brand_m
+		SET 
+			brandname = #{brandname},
+			managername = #{managername},
+			email = #{email}
+			
+		WHERE brandnum = #{brandnum}
+	</update>
+	
+	<delete id="deleteBrand" parameterType="int">	
+		DELETE FROM brand_m
+		WHERE brandnum = #{brandnum}
+	</delete>
+	
+	<select id="selectOneBrand" parameterType="int" resultType="BrandVO" >
+		SELECT brandnum, brandname, managername, email
+		FROM brand_m
+		WHERE brandnum = #{brandnum}
+	</select>
+	
+	
+</mapper>
+
+<!-- 
+public List<BrandVO> selecAllBrand();
+
+	// U
+	public int updateBrand(BrandVO brand);
+
+	// D
+	public int deleteBrand(int brandnum);
+
+ -->
