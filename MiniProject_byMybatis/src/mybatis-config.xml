@@ -6,8 +6,7 @@
   <properties resource="db.properties"/>
   
   <typeAliases>
-  	<typeAlias type="net.scit.vo.Board" alias="Board"/>
-  	<typeAlias type="net.scit.vo.Reply" alias="Reply"/>
+  	<typeAlias type="net.scit.vo.UserVO" alias="UserVO"/>
   </typeAliases>
    
   <environments default="development">
@@ -22,7 +21,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="boardMapper.xml"/>
-    <mapper resource="replyMapper.xml"/>
+    <mapper resource="UserMapper.xml"/>
   </mappers>
 </configuration>
