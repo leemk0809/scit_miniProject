@@ -14,7 +14,7 @@ public interface UserMapper {
 	UserVO selectOneUser(String usrid);
 	
 	// U
-	int updateUser(UserVO vo);
+	int updateUserInfo(UserVO vo);
 	
 	// D
 	int deleteUser(String usrid);

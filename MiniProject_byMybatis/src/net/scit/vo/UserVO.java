@@ -5,9 +5,9 @@ public class UserVO {
 	private String passwd;
 	private String usrname;
 	private String address;
-	private String amount;
+	private int amount;
 	
-	public UserVO(String usrid, String passwd, String usrname, String address, String amount) {
+	public UserVO(String usrid, String passwd, String usrname, String address, int amount) {
 		super();
 		this.usrid = usrid;
 		this.passwd = passwd;
@@ -48,11 +48,11 @@ public class UserVO {
 		this.address = address;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
