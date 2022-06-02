@@ -223,7 +223,57 @@ public class ShopUI {
 	}
 
 	private void userMenu() {
-
+		String choice;
+		
+		while(true) {
+			userUI();
+			choice = scanner.nextLine();
+			
+			switch(choice) {
+			case "1": goShopping(); break;
+			case "2": selectOneUser(); break;
+			case "3": updateUser(); break;
+			case "4": deleteUser(); break;
+			case "5": charge(); break;
+			default:
+				System.out.println("err) 메뉴를 다시 선택해 주세요");	
+			}
+		}
+	}
+	
+	private void userUI() {
+		System.out.println("=========[ 고객 화면 ]===========");
+		System.out.println("1. 쇼핑하기");
+		System.out.println("2. 내 정보 확인");
+		System.out.println("3. 내 정보 수정");
+		System.out.println("4. 탈퇴하기");
+		System.out.println("5. 캐쉬 충전");
+		System.out.println("=================================");
+		System.out.print  ("   선택>   ");
+	}
+	
+	private void goShopping() {
+		// TODO Auto-generated method stub
+		
 	}
 
+	private void selectOneUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void updateUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void deleteUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void charge() {
+		// TODO Auto-generated method stub
+		
+	}
 }
