@@ -4,14 +4,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import net.scit.dao.BrandDAO;
 import net.scit.dao.CategoryDAO;
 import net.scit.dao.ProductDAO;
+import net.scit.vo.BrandVO;
 import net.scit.vo.CategoryVO;
+import net.scit.vo.ProductVO;
 
 public class ShopUI_MJ {
 	Scanner scanner = new Scanner(System.in);
 	CategoryDAO cdao = new CategoryDAO();
 	ProductDAO pdao = new ProductDAO();
+	BrandDAO bdao = new BrandDAO();
 
 	public ShopUI_MJ() {
 		mainUI();
@@ -85,7 +89,9 @@ public class ShopUI_MJ {
 			case "2":
 				categoryManagement();
 				break;
-			// case "3": brandManagement(); break;
+			case "3":
+				brandManagement();
+				break;
 			// case "4": allUserList(); break;
 			// case "0":
 			// System.out.println("** 프로그램을 종료합니다.");
@@ -94,6 +100,105 @@ public class ShopUI_MJ {
 			// System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
+	}
+
+	private void brandManagement() {
+		BrandVO vo = new BrandVO();
+		System.out.println("=========[거래처 목록]=========");
+		System.out.println(vo);
+
+		String choice;
+
+		System.out.println();
+
+		while (true) {
+			BrandUI();
+			choice = scanner.nextLine();
+			switch (choice) {
+			// case "1":
+			// registerBrand(); break;
+			case "2":
+				brandDetailed();
+				break;
+			case "3":
+				deleteBrand();
+				break;
+			case "4":
+				updateBrand();
+				break;
+
+			default:
+				System.out.println("err) 메뉴를 다시 선택해 주세요");
+			}
+		}
+
+	}
+
+	private void updateBrand() {
+		int brandnum;
+		String brandname, managername, email;
+
+		System.out.println("> 거래처 번호: ");
+		brandnum = Integer.parseInt(scanner.nextLine());
+
+		if (productnumCheck(brandnum)) {
+			System.out.println("** 중복된 거래처가 존재합니다.");
+			return;
+		}
+		System.out.println("> 거래처 이름: ");
+		brandname = scanner.nextLine();
+		System.out.println("> 거래처 담당자 이름: ");
+		managername = scanner.nextLine();
+		System.out.println("> 거래처 메일: ");
+		email = scanner.nextLine();
+
+		BrandVO vo = new BrandVO(brandnum, brandname, managername, email);
+		// int result = bdao.(vo); 여기서부터하기
+		//System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
+
+	}
+
+	private void deleteBrand() {
+		String answer;
+		int num;
+
+		System.out.println("> 삭제할 거래처 번호 : ");
+		num = Integer.parseInt(scanner.nextLine());
+
+		BrandVO vo = bdao.selectOneBrand(num);
+		if (vo == null) {
+			System.out.println("* 해당하는 거래처가 없습니다.");
+			return;
+		}
+
+		System.out.println(vo);
+		System.out.println("** 거래처를 삭제하시겠습니까? (y/n)");
+		answer = scanner.nextLine();
+
+		if (!answer.equals("y")) {
+			System.out.println("** 삭제 작업이 취소되었습니다.");
+			return;
+		}
+
+		int result = pdao.deleteProduct(num);
+		if (result == 1) {
+			System.out.println("** 거래처 삭제가 완료되었습니다.");
+		}
+
+	}
+
+	private void brandDetailed() {
+
+	}
+
+	private void BrandUI() {
+		System.out.println("=========[거래처 관리]=========");
+		System.out.println("      1. 추 가");
+		System.out.println("      2. 상세 조회");
+		System.out.println("      3. 삭 제");
+		System.out.println("      4. 수 정");
+		System.out.println("============================");
+		System.out.print("      선택>  ");
 	}
 
 	private void productManagement() {
@@ -106,25 +211,139 @@ public class ShopUI_MJ {
 			case "1":
 				registerProduct();
 				break;
-				// case "2":
-				// productList();
-				//break;
-				// case "3":
-				// deleteProduct();
-				//break;
-			//case "4":
-				// updateProduct();
-				//break;
-
+			case "2":
+				productList();
+				break;
+			case "3":
+				selectOneProduct();
+				break;
+			case "4":
+				deleteProduct();
+				break;
+			case "5":
+				updateProduct();
+				break;
 			default:
 				System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
 	}
 
-	private void registerProduct() {
-		// TODO Auto-generated method stub
+	private void updateProduct() {
+		int productnum, price;
+		String productname;
 
+		System.out.println("수정하고 싶은 제품번호를 입력하세요 : ");
+		productnum = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = pdao.selectOneProduct(productnum);
+		if (vo == null) {
+			System.out.println("입력하신 제품 번호가 존재하지 않습니다.");
+			return;
+
+		} else {
+
+			System.out.println("수정하실 제품명을 입력해주세요");
+			productname = scanner.nextLine();
+
+			System.out.println("수정하실 제품의 가격을 입력해주세요");
+			price = Integer.parseInt(scanner.nextLine());
+
+			vo.setProductname(productname);
+			vo.setPrice(price);
+			System.out.println();
+
+			int result = pdao.updateProduct(vo);
+			System.out.println(result + "개의 제품 수정이 완료 되었습니다.");
+
+		}
+
+	}
+
+	private void deleteProduct() {
+		String answer;
+		int num;
+
+		System.out.println("> 삭제할 제품 번호 : ");
+		num = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = pdao.selectOneProduct(num);
+		if (vo == null) {
+			System.out.println("* 해당하는 제품번호가 없습니다.");
+			return;
+		}
+
+		System.out.println(vo);
+		System.out.println("** 제품을 삭제하시겠습니까? (y/n)");
+		answer = scanner.nextLine();
+
+		if (!answer.equals("y")) {
+			System.out.println("** 삭제 작업이 취소되었습니다.");
+			return;
+		}
+
+		int result = pdao.deleteProduct(num);
+		if (result == 1) {
+			System.out.println("** 제품 삭제가 완료되었습니다.");
+		}
+	}
+
+	private void selectOneProduct() {
+		int productnum;
+		System.out.println("조회할 제품 번호를 입력하세요 : ");
+		productnum = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = pdao.selectOneProduct(productnum);
+		System.out.println(vo);
+
+	}
+
+	private void productList() {
+		List<ProductVO> plist = pdao.selectAllProduct();
+		if (plist.isEmpty()) {
+			System.out.println("** 가입한 회원이 없습니다.");
+			return;
+		}
+
+		Iterator<ProductVO> iter = plist.iterator();
+		while (iter.hasNext())
+			System.out.println(iter.next());
+	}
+
+	private void registerProduct() {
+		int brandnum, categorynum, productnum, price;
+		String productname;
+
+		System.out.println("> 제품 번호: ");
+		productnum = Integer.parseInt(scanner.nextLine());
+
+		if (productnumCheck(productnum)) {
+			System.out.println("** 중복된 제품번호가 존재합니다.");
+			return;
+		}
+
+		System.out.println("> 거래처 번호: ");
+		brandnum = Integer.parseInt(scanner.nextLine());
+		System.out.println("> 카테고리 번호: ");
+		categorynum = Integer.parseInt(scanner.nextLine());
+		System.out.println("> 제품 이름: ");
+		productname = scanner.nextLine();
+		System.out.println("> 제품 가격: ");
+		price = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = new ProductVO(brandnum, categorynum, productnum, productname, price);
+		int result = pdao.insertProduct(vo);
+		System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
+
+	}
+
+	private boolean productnumCheck(int productnum) {
+		ProductVO vo = pdao.selectOneProduct(productnum);
+		// sql = select..from fitness where usrid = 'adc'; pk라 하나뿐이라 있으면 1 없으면 0뿐
+		// 그래서 리스트로 안 받고 객체로 받는다
+		if (vo != null)
+			return true;
+		return false;
 	}
 
 	private void productUI() {

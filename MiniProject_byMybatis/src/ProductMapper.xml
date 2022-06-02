@@ -6,10 +6,9 @@
 <mapper namespace="net.scit.dao.ProductMapper">
 	<insert id="insertProduct" parameterType="ProductVO">
 		INSERT INTO product_m
-		(productnum, productname, price)
+		(brandnum, categorynum, productnum, productname, price)
 		VALUES
-		(product_m_seq.nextval,
-		#{productname}, #{price})
+		(#{brandnum}, #{categorynum}, product_m_seq.nextval, #{productname}, #{price})
 	</insert>
 
 	<select id="selectAllProduct" resultType="ProductVO">
@@ -29,8 +28,7 @@
 		UPDATE product_m
 		SET
 		productname = #{productname}, price = #{price}
-		WHERE productnum =
-		#{productnum}
+		WHERE productnum = #{productnum}
 	</update>
 
 

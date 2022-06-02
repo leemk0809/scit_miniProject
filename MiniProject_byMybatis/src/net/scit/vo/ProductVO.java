@@ -20,10 +20,9 @@ public class ProductVO {
 		this.price = price;
 	}
 
-	public ProductVO(int productnum, String productname, int price) {
+	public ProductVO(String productname, int price) {
 		super();
 
-		this.productnum = productnum;
 		this.productname = productname;
 		this.price = price;
 	}
