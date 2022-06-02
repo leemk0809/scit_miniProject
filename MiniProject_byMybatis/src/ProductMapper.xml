@@ -6,31 +6,39 @@
 <mapper namespace="net.scit.dao.ProductMapper">
 	<insert id="insertProduct" parameterType="ProductVO">
 		INSERT INTO product_m
-			(productnum, productname, price)
+		(productnum, productname, price)
 		VALUES
-			(product_m_seq.nextval, #{productname}, #{price})
+		(product_m_seq.nextval,
+		#{productname}, #{price})
 	</insert>
-	
-	<select id="selectAllProduct">
 
-
+	<select id="selectAllProduct" resultType="ProductVO">
+		SELECT * FROM product_m
 	</select>
-	
-	<select id="selectOneProduct">
 
-
+	<select id="selectOneProduct" parameterType="int"
+		resultType="ProductVO">
+		SELECT productnum, productname, price
+		FROM
+		product_m
+		WHERE
+		productnum = #{productnum}
 	</select>
-	<!-- 
-	<update id="">
 
-
+	<update id="updateProduct" parameterType="ProductVO">
+		UPDATE product_m
+		SET
+		productname = #{productname}, price = #{price}
+		WHERE productnum =
+		#{productnum}
 	</update>
 
-	<delete id="">
 
-
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product_m
+		WHERE productnum = #{productnum}
+		
 	</delete>
-	 -->
 </mapper>
 
 <!--s // C public int insertProduct(ProductVO vo); // R public List<ProductVO> 

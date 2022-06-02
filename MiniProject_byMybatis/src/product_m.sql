@@ -10,3 +10,10 @@ CREATE TABLE product_m
 		price       NUMBER
 	);
 CREATE SEQUENCE product_m_seq;
+
+
+--insert
+INSERT INTO product_m
+(brandnum, categorynum, productnum, productname, price)
+VALUES
+(4, 2, product_m_seq.nextval, 'Àè½¼Ä«¸á·¹¿Â', 350000);

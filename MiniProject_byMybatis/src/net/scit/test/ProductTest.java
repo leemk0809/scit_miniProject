@@ -1,5 +1,7 @@
 package net.scit.test;
 
+import java.util.List;
+
 import net.scit.dao.ProductDAO;
 import net.scit.vo.ProductVO;
 
@@ -8,12 +10,30 @@ public class ProductTest {
 	public static void main(String[] args) {
 		ProductDAO dao = new ProductDAO();
 
-		// insertProduct
-		int result = dao.insertProduct(new ProductVO(1, "Àè½¼ Ä«¸á·¹¿Â", 550000));
-		System.out.println(result + "°³ insertProducty() ¼º°ø");
-		
-	
+		// insertProduct Test ok
+		// int result = dao.insertProduct(new ProductVO(1, "Àè½¼ Ä«¸á·¹¿Â", 550000));
+		// System.out.println(result + "°³ insertProducty() ¼º°ø");
+
+		// selectAllProduct() Test ok
+		// List<ProductVO> list = dao.selectAllProduct();
+		// list.forEach(x->System.out.println(x));
+
+		// selectOneProduct() Test ok
+		// ProductVO vo = dao.selectOneProduct(1);
+		// System.out.println(vo);
+
+		// updateProduct() Test ok
+		/*
+		 * int num = 1; ProductVO vo = dao.selectOneProduct(num);
+		 * vo.setProductname("±â¶óÀÇÀÚ"); vo.setPrice(350000);
+		 * 
+		 * int result = dao.updateProduct(vo); System.out.println(result +
+		 * "°³ updateProduct ¼º°ø");
+		 */
+
+		// deleteProduct() Test ok
+		// int result = dao.deleteProduct(1);
+		// System.out.println(result + "°³ deleteProduct ¼º°ø");
 
 	}
-
 }

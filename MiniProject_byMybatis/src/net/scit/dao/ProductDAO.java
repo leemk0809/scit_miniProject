@@ -50,9 +50,9 @@ public class ProductDAO {
 
 		int result = mapper.updateProduct(vo);
 		if (result == 1) {
+			session.commit();
 			return 1;
 		}
-		session.commit();
 		return 0;
 	}
 

@@ -23,9 +23,12 @@ INSERT INTO brand_m
 VALUES
 (brand_m_seq.nextval, '¹Î±¹ÀÌ³×', '¹Î±¹', 'min');
 
-DELETE FROM brand_m
-WHERE brandnum = 1;
+INSERT INTO brand_m
+(brandnum, brandname, managername, email)
+VALUES
+(brand_m_seq.nextval, 'itt', 'ÄÚ´õ', 'mmm');
 
-UPDATE brand_m
-SET brandname = '¹Î±¹ÀÌ³× ²ÉÁý'
-WHERE brandnum = 2;
+INSERT INTO brand_m
+(brandnum, brandname, managername, email)
+VALUES
+(brand_m_seq.nextval, '±â¶ó±â¶ó', '±â¶ó½Ü', 'gira');

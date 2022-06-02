@@ -17,10 +17,10 @@ public class CategoryTest {
 		*/
 
 
-		/*selectAllCategory()  Test ok
-		List<CategoryVO> list = dao.selectAllCategory();  
-		list.forEach(x->System.out.println(x));
-		*/
+		//selectAllCategory()  Test ok
+		//List<CategoryVO> list = dao.selectAllCategory();  
+		//list.forEach(x->System.out.println(x));
+		
 		
 		
 		/*selctOneCategory()   Test ok
