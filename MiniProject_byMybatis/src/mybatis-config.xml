@@ -10,6 +10,7 @@
   	<typeAlias type="net.scit.vo.BrandVO" alias="BrandVO"/>
   	<typeAlias type="net.scit.vo.CategoryVO" alias="CategoryVO"/>
   	<typeAlias type="net.scit.vo.ProductVO" alias="ProductVO"/>
+  	<typeAlias type="net.scit.vo.InventoryVO" alias="InventoryVO"/>
   </typeAliases>
    
   <environments default="development">
@@ -28,5 +29,6 @@
     <mapper resource="BrandMapper.xml"/>
     <mapper resource="CategoryMapper.xml"/>
     <mapper resource="ProductMapper.xml"/>
+    <mapper resource="InventoryMapper.xml"/>
   </mappers>
 </configuration>
