@@ -1,11 +1,11 @@
 package net.scit.main;
 
-import net.scit.ui.ShopUI;
+import net.scit.ui.ShopUI_MJ;
 
 public class ShopMain {
 
 	public static void main(String[] args) {
-		new ShopUI();
+		new ShopUI_MJ();
 	}
 
 }

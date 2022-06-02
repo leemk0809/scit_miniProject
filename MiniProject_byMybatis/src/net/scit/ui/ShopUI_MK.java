@@ -7,11 +7,11 @@ import java.util.Scanner;
 import net.scit.dao.CategoryDAO;
 import net.scit.vo.CategoryVO;
 
-public class ShopUI {
+public class ShopUI_MK {
 	Scanner scanner = new Scanner(System.in);
 	CategoryDAO dao = new CategoryDAO();
 
-	public ShopUI() {
+	public ShopUI_MK() {
 		mainUI();
 	}
 
