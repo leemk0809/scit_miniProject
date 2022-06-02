@@ -14,9 +14,10 @@ public class CategoryVO {
 		this.categoryname = categoryname;
 	}
 
-	public int getCategorynum() {
-		return categorynum;
+	public CategoryVO(String categoryname) {
+		this.categoryname = categoryname;
 	}
+
 
 	public void setCategorynum(int categorynum) {
 		this.categorynum = categorynum;
