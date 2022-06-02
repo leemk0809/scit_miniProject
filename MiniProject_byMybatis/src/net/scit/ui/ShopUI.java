@@ -139,6 +139,7 @@ public class ShopUI {
 				System.out.println("카테고리 이름을 입력해주세요");
 			}
 			vo.setCategoryname(categoryname);
+			System.out.println();
 
 			int result = dao.updateCategory(vo);
 			System.out.println(result + "수정이 완료 되었습니다.");
