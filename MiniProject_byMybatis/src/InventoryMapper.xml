@@ -4,5 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.scit.dao.InventoryMapper">
-	
+	<select id="selectAllInventory" resultType="InventoryVO">
+		SELECT 
+    		seq, i.productnum, productname, price, stock
+		FROM 
+		    inventory_m i, product_m p
+		WHERE
+		    i.productnum = p.productnum
+	</select>
+	<insert id="insertInventory" parameterType="int">
+		INSERT INTO inventory_m
+			(seq, productnum, stock)
+		VALUES
+			(inventory_m_seq.nextval, #{productnum}, #{stock})
+	</insert>
+	<update id="addStock" parameterType="int">
+		UPDATE inventory_m 
+		SET stock = stock + #{stockCnt}
+		WHERE productnum = #{productnum}
+	</update>
+	<update id="subtractStock" parameterType="int">
+		UPDATE inventory_m 
+		SET stock = stock - #{stockCnt}
+		WHERE productnum = #{productnum}
+	</update>
 </mapper>
+
+<!-- 
+List<InventoryVO> selectAllInventory();
+	void addStock(int productnum, int cnt); 
+	void subtractStock(int productnum, int cnt); 
+ -->

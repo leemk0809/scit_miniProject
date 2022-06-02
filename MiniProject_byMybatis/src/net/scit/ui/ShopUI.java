@@ -125,7 +125,6 @@ public class ShopUI {
 		System.out.println("      4. 전체 회원 조회");
 		System.out.println("==========================");
 		System.out.print  ("       선택>  ");
-
 	}
 
 	private void userMenu() {
