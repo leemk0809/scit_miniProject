@@ -11,7 +11,7 @@ import net.scit.vo.InventoryVO;
 public class InventoryDAO {
 	SqlSessionFactory factory = MybatisConfig.getSqlSessionFactory();
 
-	List<InventoryVO> selectAllInventory(){
+	public List<InventoryVO> selectAllInventory(){
 		SqlSession session = null;
 		session = factory.openSession();
 		
@@ -19,22 +19,45 @@ public class InventoryDAO {
 		
 		return mapper.selectAllInventory();
 	}
-
-	void addStock(int productnum, int cnt) {
+	
+	public int insertInventory(int productnum, int stock) {
 		SqlSession session = null;
 		session = factory.openSession();
 		
 		InventoryMapper mapper = session.getMapper(InventoryMapper.class);
 		
-		mapper.addStock(productnum, cnt);
+		int result = mapper.insertInventory(productnum, stock);
+		
+		if(result != -1) {
+			session.commit();
+		}
+		
+		return result;
 	}
-	void subtractStock(int productnum, int cnt) {
+
+	public int addStock(int productnum, int stockCnt) {
 		SqlSession session = null;
 		session = factory.openSession();
 		
 		InventoryMapper mapper = session.getMapper(InventoryMapper.class);
 		
-		mapper.subtractStock(productnum, cnt);
+		int result = mapper.addStock(productnum, stockCnt);
+		if(result != -1)
+			session.commit();
+		
+		return result;
+	}
+	public int subtractStock(int productnum, int stockCnt) {
+		SqlSession session = null;
+		session = factory.openSession();
+		
+		InventoryMapper mapper = session.getMapper(InventoryMapper.class);
+		
+		int result = mapper.subtractStock(productnum, stockCnt);
+		if(result != -1)
+			session.commit();
+		
+		return result;
 	}
 
 }
