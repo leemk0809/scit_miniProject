@@ -39,16 +39,4 @@ public class BrandDAOTest {
 		
 		
 	}
-	
-	/*public List<BrandVO> selecAllBrand();
-
-	// U
-	public int updateBrand(BrandVO brand);
-
-	// D
-	public int deleteBrand(int brandnum);
-	 * 
-	 * 
-	 */
-
 }
