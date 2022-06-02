@@ -28,7 +28,5 @@
     <mapper resource="BrandMapper.xml"/>
     <mapper resource="CategoryMapper.xml"/>
     <mapper resource="ProductMapper.xml"/>
-    
-    
   </mappers>
 </configuration>

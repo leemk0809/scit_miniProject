@@ -9,18 +9,18 @@
 			(productnum, productname, price)
 		VALUES
 			(product_m_seq.nextval, #{productname}, #{price})
-
 	</insert>
-	<select id="">
+	
+	<select id="selectAllProduct">
 
 
 	</select>
-
-	<select id="">
+	
+	<select id="selectOneProduct">
 
 
 	</select>
-
+	<!-- 
 	<update id="">
 
 
@@ -30,8 +30,7 @@
 
 
 	</delete>
-
-
+	 -->
 </mapper>
 
 <!--s // C public int insertProduct(ProductVO vo); // R public List<ProductVO> 
