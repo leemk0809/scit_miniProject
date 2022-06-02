@@ -37,7 +37,6 @@ public class ShopUI {
 		System.out.println("3. 탈퇴");
 		System.out.println("==========================");
 		System.out.print("  > 입력 : ");
-		System.out.println();
 	}
 
 	private void login() {
@@ -63,13 +62,12 @@ public class ShopUI {
 		System.out.println("2. 관리자 화면으로");
 		System.out.println("=================================");
 		System.out.print("  > 입력 : ");
-		System.out.println();
 	}
 
-	private void adminUI() {
+	private void adminMenu() {
 		String choice;
 		while (true) {
-			adminMenu();
+			adminUI();
 			choice = scanner.nextLine();
 
 			switch (choice) {
@@ -95,10 +93,9 @@ public class ShopUI {
 		System.out.println("1. 추가");
 		System.out.println("2. 전체 조회");
 		System.out.println("3. 삭제");
-		System.out.print("4. 수정");
-		System.out.println("------------------------------");
-		System.out.print("  선택>    ");
-		System.out.println();
+		System.out.println("4. 수정");
+		System.out.println("=================================");
+		System.out.print  ("   선택>   ");
 
 		while (true) {
 
@@ -119,16 +116,15 @@ public class ShopUI {
 		}
 	}
 
-	private void adminMenu() {
+	private void adminUI() {
 		System.out.println("=========[관리자]=========");
 		System.out.println(" 오늘도 노예처럼 일을 하자!! ");
 		System.out.println("      1. 제품 관리");
 		System.out.println("      2. 카테고리 관리");
 		System.out.println("      3. 거래처 관리");
 		System.out.println("      4. 전체 회원 조회");
-		System.out.println("-----------------------");
-		System.out.print("         선택>            ");
-		System.out.println();
+		System.out.println("==========================");
+		System.out.print  ("       선택>  ");
 
 	}
 
