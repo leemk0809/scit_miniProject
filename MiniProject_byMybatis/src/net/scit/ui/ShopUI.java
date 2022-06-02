@@ -1,9 +1,15 @@
 package net.scit.ui;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+
+import net.scit.dao.CategoryDAO;
+import net.scit.vo.CategoryVO;
 
 public class ShopUI {
 	Scanner scanner = new Scanner(System.in);
+	CategoryDAO dao = new CategoryDAO();
 
 	public ShopUI() {
 		mainUI();
@@ -77,11 +83,11 @@ public class ShopUI {
 				break;
 			// case "3": brandManagement(); break;
 			// case "4": allUserList(); break;
-			//case "0":
-				//System.out.println("** 프로그램을 종료합니다.");
-				//System.exit(0);
-			//default:
-				//System.out.println("err) 메뉴를 다시 선택해 주세요");
+			// case "0":
+			// System.out.println("** 프로그램을 종료합니다.");
+			// System.exit(0);
+			// default:
+			// System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
 	}
@@ -89,31 +95,108 @@ public class ShopUI {
 	private void categoryManagement() {
 		String choice;
 
-		System.out.println("=========[카테고리 관리]=========");
-		System.out.println("1. 추가");
-		System.out.println("2. 전체 조회");
-		System.out.println("3. 삭제");
-		System.out.println("4. 수정");
-		System.out.println("=================================");
-		System.out.print  ("   선택>   ");
-
 		while (true) {
+			categoryUI();
 
 			choice = scanner.nextLine();
-
 			switch (choice) {
-			// case "1": registerCategory(); break;
-			// case "2": categoryList; break;
-			// case "3": deleteCategory(); break;
-			// case "4": updateCategory(); break;
-			case "0":
-				System.out.println("** 프로그램을 종료합니다.");
-				System.exit(0);
+			case "1":
+				registerCategory();
+				break;
+			case "2":
+				categoryList();
+				break;
+			case "3":
+				deleteCategory();
+				break;
+			case "4":
+				updateCategory();
+				break;
+
 			default:
 				System.out.println("err) 메뉴를 다시 선택해 주세요");
 
 			}
 		}
+	}
+
+	private void updateCategory() {
+		int categorynum;
+		String categoryname;
+
+		System.out.println("수정할 카테고리 번호 : ");
+		categorynum = Integer.parseInt(scanner.nextLine());
+
+		CategoryVO vo = dao.selectOneCategory(categorynum);
+		if (vo == null) {
+			System.out.println("입력하신 카테고리 번호가 존재하지 않습니다.");
+			return;
+			
+		} else {
+			System.out.println("수정하실 카테고리 이름을 입력해주세요");
+			categoryname = scanner.nextLine();
+			if (categoryname == null) {
+				System.out.println("카테고리 이름을 입력해주세요");
+			}
+			vo.setCategoryname(categoryname);
+
+			int result = dao.updateCategory(vo);
+			System.out.println(result + "수정이 완료 되었습니다.");
+
+		}
+
+	}
+
+	private void deleteCategory() {
+		String answer;
+		int num;
+
+		System.out.println("> 삭제할 카테고리 번호 : ");
+		num = Integer.parseInt(scanner.nextLine());
+
+		CategoryVO vo = dao.selectOneCategory(num); 
+		if (vo == null) {
+			System.out.println("* 카테고리가 없습니다.");
+			return;
+		}
+
+		System.out.println(vo);
+		System.out.println("** 카테고리를 삭제하시겠습니까? (y/n)");
+		answer = scanner.next();
+
+		if (!answer.equals("y")) {
+			System.out.println("** 삭제 작업이 취소되었습니다.");
+			return;
+		}
+
+		int result = dao.deleteCategory(num);
+		if (result == 1) {
+			System.out.println("** 카테고리 삭제가 완료되었습니다.");
+		}
+	}
+
+	private void categoryList() {
+
+		List<CategoryVO> clist = dao.selectAllCategory();
+		if (clist.isEmpty()) {
+			System.out.println("카테고리가 없습니다.");
+			return;
+		}
+		Iterator<CategoryVO> iter = clist.iterator();
+		while (iter.hasNext())
+			System.out.println(iter.next());
+	}
+
+	private void registerCategory() {
+		String categoryname;
+
+		System.out.println("> 카테고리 이름: ");
+		categoryname = scanner.nextLine();
+
+		CategoryVO vo = new CategoryVO(categoryname);
+		int result = dao.insertCategory(vo);
+		System.out.println("카테고리 등록이 완료되었습니다.");
+
 	}
 
 	private void adminUI() {
@@ -124,7 +207,18 @@ public class ShopUI {
 		System.out.println("      3. 거래처 관리");
 		System.out.println("      4. 전체 회원 조회");
 		System.out.println("==========================");
-		System.out.print  ("       선택>  ");
+		System.out.print("       선택>  ");
+
+	}
+
+	private void categoryUI() {
+		System.out.println("=========[카테고리 관리]=========");
+		System.out.println("1. 추가");
+		System.out.println("2. 전체 조회");
+		System.out.println("3. 삭제");
+		System.out.println("4. 수정");
+		System.out.println("=================================");
+		System.out.print("   선택>   ");
 	}
 
 	private void userMenu() {
