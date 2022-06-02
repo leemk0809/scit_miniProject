@@ -16,30 +16,57 @@ public class ProductDAO {
 		session = factory.openSession();
 		ProductMapper mapper = session.getMapper(ProductMapper.class);
 
-	
 		int result = mapper.insertProduct(vo);
 		session.commit();
-		
+
 		return result;
 	}
 
 	public List<ProductVO> selectAllProduct() {
-		return null;
+
+		SqlSession session = null;
+		session = factory.openSession();
+		ProductMapper mapper = session.getMapper(ProductMapper.class);
+
+		List<ProductVO> list = mapper.selectAllProduct();
+		return list;
 
 	}
 
 	public ProductVO selectOneProduct(int productnum) {
-		return null;
+		SqlSession session = null;
+		session = factory.openSession();
+		ProductMapper mapper = session.getMapper(ProductMapper.class);
+
+		ProductVO vo = mapper.selectOneProduct(productnum);
+		return vo;
 	}
 
 	// U
 	public int updateProduct(ProductVO vo) {
-		return 1;
+		SqlSession session = null;
+		session = factory.openSession();
+		ProductMapper mapper = session.getMapper(ProductMapper.class);
+
+		int result = mapper.updateProduct(vo);
+		if (result == 1) {
+			return 1;
+		}
+		session.commit();
+		return 0;
 	}
 
 	// D
 	public int deleteProduct(int productnum) {
-		return 1;
-	}
+		SqlSession session = null;
+		session = factory.openSession();
+		ProductMapper mapper = session.getMapper(ProductMapper.class);
 
+		int result = mapper.deleteProduct(productnum);
+		if (result == 1) {
+			session.commit();
+			return 1;
+		}
+		return 0;
+	}
 }

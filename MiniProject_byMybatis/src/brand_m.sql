@@ -10,3 +10,22 @@ CREATE TABLE brand_m
 	);
 
 CREATE SEQUENCE brand_m_seq;
+
+
+---Insert
+INSERT INTO brand_m
+(brandnum, brandname, managername, email)
+VALUES
+(brand_m_seq.nextval, '¸¸µÎ³×', '¸¸µÎ', 'cor');
+
+INSERT INTO brand_m
+(brandnum, brandname, managername, email)
+VALUES
+(brand_m_seq.nextval, '¹Î±¹ÀÌ³×', '¹Î±¹', 'min');
+
+DELETE FROM brand_m
+WHERE brandnum = 1;
+
+UPDATE brand_m
+SET brandname = '¹Î±¹ÀÌ³× ²ÉÁý'
+WHERE brandnum = 2;
