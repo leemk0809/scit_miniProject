@@ -20,7 +20,7 @@ public class ProductVO {
 		this.price = price;
 	}
 
-	public ProductVO(int productnum, String productname, int price) {
+	public ProductVO(String productname, int price) {
 		super();
 
 		this.productname = productname;
