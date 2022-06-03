@@ -17,9 +17,8 @@ public class UserDAOTest {
 		
 		
 		// selectAllUser() Test ok
-		
-		List<UserVO> list = dao.selectAllUser();
-		list.forEach(x -> System.out.println(x));
+		//List<UserVO> list = dao.selectAllUser();
+		//list.forEach(x -> System.out.println(x));
 		
 		
 		// selectOneUser() Test ok
