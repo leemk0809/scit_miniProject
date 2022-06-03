@@ -14,8 +14,9 @@ public class InventoryDAOTest {
 		ProductDAO pDao = new ProductDAO();
 
 		// selectAllInventory() Test ok
-		//List<InventoryVO> list = dao.selectAllInventory(1);
-		//list.forEach(x -> System.out.println(x));
+		List<InventoryVO> list = dao.selectAllInventory(1);
+		System.out.println(list.size());
+		list.forEach(x -> System.out.println(x));
 		
 		// insertInventory() Test ok
 		/*

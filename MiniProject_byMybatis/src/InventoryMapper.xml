@@ -6,7 +6,7 @@
 <mapper namespace="net.scit.dao.InventoryMapper">
 	<select id="selectAllInventory" resultType="InventoryVO" parameterType="int">
 		SELECT 
-    		seq, i.productnum, productname, price, stock
+    		i.seq, p.productnum, p.productname, p.price, i.stock
 		FROM 
 		    inventory_m i, product_m p
 		WHERE

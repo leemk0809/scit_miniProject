@@ -216,9 +216,11 @@ public class ShopUI_MK {
 	private void InventoryMenu() {
 		String choice;
 		while(true) {
+			System.out.println("==========[재고 관리]==========");
 			System.out.println("1. 재고 추가");
-			System.out.println("2. 재고 삭제");
+			System.out.println("2. 재고 빼기");
 			System.out.println("0. 돌아가기");
+			System.out.println("===============================");
 			System.out.print  ("   선택 >  ");	
 			choice = scanner.nextLine();
 			switch (choice) {
@@ -231,7 +233,7 @@ public class ShopUI_MK {
 	}
 	
 	private void addStock() {
-		System.out.print("추가할 제품 번호 : ");
+		System.out.print("  추가할 제품 번호 > ");
 		int productnum = Integer.parseInt(scanner.nextLine());
 		
 		if(pdao.selectOneProduct(productnum) == null) {
@@ -239,11 +241,33 @@ public class ShopUI_MK {
 			return;
 		}
 		
-		//idao.addStock(productnum, stockCnt);
+		System.out.print("  추가 할 수량 > ");
+		int stockCnt = Integer.parseInt(scanner.nextLine());
+		
+		int result = idao.addStock(productnum, stockCnt);
+		
+		if(result != -1) {
+			System.out.println(stockCnt + "개 추가 완료.");
+		}
 	}
 	
 	private void subtractStock() {
+		System.out.print("뺄 제품 번호 : ");
+		int productnum = Integer.parseInt(scanner.nextLine());
 		
+		if(pdao.selectOneProduct(productnum) == null) {
+			System.out.println("** 제품이 없습니다. 다시 입력해 주세요.");
+			return;
+		}
+		
+		System.out.print("뺄 수량 : ");
+		int stockCnt = Integer.parseInt(scanner.nextLine());
+		
+		int result = idao.addStock(productnum, -stockCnt);
+		
+		if(result != -1) {
+			System.out.println(stockCnt + "개 추가 완료.");
+		}
 	}
 
 	private void BrandUI() {
