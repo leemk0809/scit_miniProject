@@ -5,7 +5,7 @@ import java.util.List;
 import net.scit.dao.ProductDAO;
 import net.scit.vo.ProductVO;
 
-public class ProductTest {
+public class ProductDAOTest {
 
 	public static void main(String[] args) {
 		ProductDAO dao = new ProductDAO();
@@ -16,8 +16,8 @@ public class ProductTest {
 		 
 
 		// selectAllProduct() Test ok
-		// List<ProductVO> list = dao.selectAllProduct();
-		// list.forEach(x->System.out.println(x));
+		 List<ProductVO> list = dao.selectAllProduct();
+		 list.forEach(x->System.out.println(x));
 
 		// selectOneProduct() Test ok
 		// ProductVO vo = dao.selectOneProduct(1);

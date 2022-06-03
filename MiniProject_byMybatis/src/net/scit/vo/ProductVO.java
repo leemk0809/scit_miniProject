@@ -20,7 +20,7 @@ public class ProductVO {
 		this.price = price;
 	}
 
-	public ProductVO(String productname, int price) {
+	public ProductVO(int productnum, String productname, int price) {
 		super();
 
 		this.productname = productname;
@@ -71,6 +71,11 @@ public class ProductVO {
 	public String toString() {
 		return "ProductVO [brandnum=" + brandnum + ", categorynum=" + categorynum + ", productnum=" + productnum
 				+ ", productname=" + productname + ", price=" + price + "]";
+	}
+
+	public String printList() {
+		String temp = String.format("%3d %15s %,9d¿ø", productnum, productname, price);
+		return temp;
 	}
 
 }

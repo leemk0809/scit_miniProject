@@ -76,7 +76,7 @@ public class ShopUI_MJ {
 		System.out.println("1. 고객 화면으로");
 		System.out.println("2. 관리자 화면으로");
 		System.out.println("=================================");
-		System.out.print  ("  > 입력 : ");
+		System.out.print("  > 입력 : ");
 	}
 
 	private void adminMenu() {
@@ -95,13 +95,14 @@ public class ShopUI_MJ {
 			case "3":
 				brandManagement();
 				break;
-			case "4": allUserList(); 
-			break;
+			case "4":
+				allUserList();
+				break;
 			case "0":
-			System.out.println("** 프로그램을 종료합니다.");
-			System.exit(0);
+				System.out.println("** 프로그램을 종료합니다.");
+				System.exit(0);
 			default:
-		    System.out.println("err) 메뉴를 다시 선택해 주세요");
+				System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
 	}
@@ -118,7 +119,7 @@ public class ShopUI_MJ {
 	private void brandManagement() {
 		BrandVO vo = new BrandVO();
 		System.out.println("=========[거래처 목록]=========");
-		
+
 		System.out.println(vo);
 
 		String choice;
@@ -166,7 +167,7 @@ public class ShopUI_MJ {
 
 		BrandVO vo = new BrandVO(brandnum, brandname, managername, email);
 		// int result = bdao.(vo); 여기서부터하기
-		//System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
+		// System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
 
 	}
 
@@ -500,7 +501,82 @@ public class ShopUI_MJ {
 	}
 
 	private void userMenu() {
+		String choice;
 
+		while (true) {
+			userUI();
+			choice = scanner.nextLine();
+
+			switch (choice) {
+			case "1":
+				goShopping();
+				break;
+			/*
+			 * case "2": selectOneUser(); break; case "3": updateUser(); break; case "4":
+			 * deleteUser(); break; case "5": charge(); break;
+			 */
+			default:
+				System.out.println("err) 메뉴를 다시 선택해 주세요");
+			}
+		}
+
+	}
+
+	private void goShopping() {
+		System.out.println("==========[ 카테고리 ]==========");
+		System.out.println("1. 가구");
+		System.out.println("2. 패브릭");
+		System.out.print("   선택>   ");
+
+		String choice = scanner.nextLine();
+
+		switch (choice) {
+		case "1":
+			furniture();
+			break;
+		// case "2" :
+		// fabric(); break;
+
+		}
+
+	}
+
+	private void furniture() {
+		int choice;
+		System.out.println("==========[ 의자 ]==========");
+		List<ProductVO> proList = pdao.selectAllProduct();
+		proList.forEach(x -> System.out.println(x.printList()));
+
+		System.out.println("> 제품 번호 선택 :  ");
+		choice = Integer.parseInt(scanner.nextLine());
+		
+		ProductVO vo = pdao.selectOneProduct(choice);
+
+		if (choice == vo.getProductnum()) {
+			System.out.println(vo);
+			//System.out.println("brandnum : " + brandnum);
+			System.out.println("                       의자                         ");
+			System.out.println("---------------------------------------------------");
+			System.out.println("   거래처 이름	         가구이름	          판매가	       ");
+			System.out.println("---------------------------------------------------");
+			System.out.printf("%15s %20 %,10d원", 
+							   bdao.selectOneBrand(vo.getBrandnum()).getBrandname(), 
+							   
+							   pdao.selectOneProduct(choice).getProductname(),
+							   pdao.selectOneProduct(choice).getPrice());
+			
+		}
+	}//"%3d %15s %,9d원
+
+	private void userUI() {
+		System.out.println("==========[ 고객 화면 ]==========");
+		System.out.println("1. 쇼핑하기");
+		System.out.println("2. 내 정보 확인");
+		System.out.println("3. 내 정보 수정");
+		System.out.println("4. 탈퇴하기");
+		System.out.println("5. 캐쉬 충전");
+		System.out.println("=================================");
+		System.out.print("   선택>   ");
 	}
 
 }

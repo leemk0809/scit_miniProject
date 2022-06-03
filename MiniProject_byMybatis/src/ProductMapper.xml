@@ -17,7 +17,7 @@
 
 	<select id="selectOneProduct" parameterType="int"
 		resultType="ProductVO">
-		SELECT productnum, productname, price
+		SELECT brandnum, categorynum, productnum, productname, price
 		FROM
 		product_m
 		WHERE

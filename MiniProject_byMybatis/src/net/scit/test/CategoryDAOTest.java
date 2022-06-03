@@ -5,7 +5,7 @@ import java.util.List;
 import net.scit.dao.CategoryDAO;
 import net.scit.vo.CategoryVO;
 
-public class CategoryTest {
+public class CategoryDAOTest {
 
 	public static void main(String[] args) {
 		CategoryDAO dao = new CategoryDAO();    
