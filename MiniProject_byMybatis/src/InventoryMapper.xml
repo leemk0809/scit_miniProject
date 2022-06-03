@@ -4,13 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.scit.dao.InventoryMapper">
-	<select id="selectAllInventory" resultType="InventoryVO">
+	<select id="selectAllInventory" resultType="InventoryVO" parameterType="int">
 		SELECT 
     		seq, i.productnum, productname, price, stock
 		FROM 
 		    inventory_m i, product_m p
 		WHERE
 		    i.productnum = p.productnum
+		    AND p.brandnum = #{brandnum}
 	</select>
 	<insert id="insertInventory" parameterType="int">
 		INSERT INTO inventory_m

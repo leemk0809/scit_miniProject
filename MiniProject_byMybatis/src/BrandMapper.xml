@@ -24,7 +24,7 @@
 		WHERE brandnum = #{brandnum}
 	</delete>
 	
-	<select id="selectOneBrand" parameterType="int" resultType="ProductVO" >
+	<select id="selectOneBrand" parameterType="int" resultType="BrandVO" >
 		SELECT brandnum, brandname, managername, email
 		FROM brand_m
 		WHERE brandnum = #{brandnum}

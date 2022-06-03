@@ -29,7 +29,7 @@
 		WHERE usrid = #{usrid}
 	</delete>
 	
-	<update id="chargeAmount" parameterType="UserVO">
+	<update id="changeAmount" parameterType="UserVO">
 		UPDATE usr_m
 		SET
 			amount = #{amount}

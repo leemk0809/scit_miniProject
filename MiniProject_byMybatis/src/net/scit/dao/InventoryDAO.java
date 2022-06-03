@@ -11,13 +11,13 @@ import net.scit.vo.InventoryVO;
 public class InventoryDAO {
 	SqlSessionFactory factory = MybatisConfig.getSqlSessionFactory();
 
-	public List<InventoryVO> selectAllInventory(){
+	public List<InventoryVO> selectAllInventory(int brandnum){
 		SqlSession session = null;
 		session = factory.openSession();
 		
 		InventoryMapper mapper = session.getMapper(InventoryMapper.class);
 		
-		return mapper.selectAllInventory();
+		return mapper.selectAllInventory(brandnum);
 	}
 	
 	public int insertInventory(int productnum, int stock) {
@@ -59,5 +59,4 @@ public class InventoryDAO {
 		
 		return result;
 	}
-
 }

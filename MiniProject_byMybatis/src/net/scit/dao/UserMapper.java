@@ -19,5 +19,5 @@ public interface UserMapper {
 	// D
 	public int deleteUser(String usrid);
 	
-	public int chargeAmount(UserVO vo);
+	public int changeAmount(UserVO vo);
 }

@@ -6,10 +6,12 @@ import java.util.Scanner;
 
 import net.scit.dao.BrandDAO;
 import net.scit.dao.CategoryDAO;
+import net.scit.dao.InventoryDAO;
 import net.scit.dao.ProductDAO;
 import net.scit.dao.UserDAO;
 import net.scit.vo.BrandVO;
 import net.scit.vo.CategoryVO;
+import net.scit.vo.InventoryVO;
 import net.scit.vo.ProductVO;
 import net.scit.vo.UserVO;
 
@@ -19,6 +21,7 @@ public class ShopUI_MK {
 	ProductDAO pdao = new ProductDAO();
 	BrandDAO bdao = new BrandDAO();
 	UserDAO udao = new UserDAO();
+	InventoryDAO idao = new InventoryDAO();
 	String tempUsrid = "mk"; // 로그인 생기기전 까지 쓸 임시 아이디
 
 	public ShopUI_MK() {
@@ -119,8 +122,8 @@ public class ShopUI_MK {
 			BrandUI();
 			choice = scanner.nextLine();
 			switch (choice) {
-			// case "1":
-			// registerBrand(); break;
+			case "1":
+				 break;
 			case "2":
 				brandDetailed();
 				break;
@@ -192,7 +195,55 @@ public class ShopUI_MK {
 	}
 
 	private void brandDetailed() {
-
+		System.out.println("");
+		System.out.print("** 조회하려는 거래처 번호를 입력해 주세요. : ");
+		int brandnum = Integer.parseInt(scanner.nextLine());
+		
+		BrandVO vo = bdao.selectOneBrand(brandnum);
+		
+		if(vo == null) {
+			System.out.println("** 존재 하지 않는 번호입니다. 다시 입력해주세요.");
+			return;
+		}
+		
+		System.out.printf("=========[ %s 거래처 물건 ]=========\n", vo.getBrandname());
+		List<InventoryVO> list = idao.selectAllInventory(brandnum);
+		list.forEach(x -> System.out.println(x));
+		System.out.println("====================================");
+		InventoryMenu();
+	}
+	
+	private void InventoryMenu() {
+		String choice;
+		while(true) {
+			System.out.println("1. 재고 추가");
+			System.out.println("2. 재고 삭제");
+			System.out.println("0. 돌아가기");
+			System.out.print  ("   선택 >  ");	
+			choice = scanner.nextLine();
+			switch (choice) {
+			case "1": addStock(); break;
+			case "2": subtractStock(); break;
+			case "0": return;
+			default: System.out.println("** 메뉴를 다시 선택해 주세요.");
+			}
+		}
+	}
+	
+	private void addStock() {
+		System.out.print("추가할 제품 번호 : ");
+		int productnum = Integer.parseInt(scanner.nextLine());
+		
+		if(pdao.selectOneProduct(productnum) == null) {
+			System.out.println("** 제품이 없습니다. 다시 입력해 주세요.");
+			return;
+		}
+		
+		//idao.addStock(productnum, stockCnt);
+	}
+	
+	private void subtractStock() {
+		
 	}
 
 	private void BrandUI() {
@@ -611,7 +662,7 @@ public class ShopUI_MK {
 		int amount = Integer.parseInt(scanner.nextLine());
 		
 		vo.setAmount(vo.getAmount() + amount);
-		int result = udao.chargeAmount(vo);
+		int result = udao.changeAmount(vo);
 		
 		if(result != -1) {
 			System.out.println(amount +"원 충전완료!");

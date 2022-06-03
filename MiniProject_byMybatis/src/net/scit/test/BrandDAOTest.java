@@ -15,7 +15,7 @@ public class BrandDAOTest {
 		//list.forEach(x->System.out.println(x));
 		
 		//selecOneBrand() Test ok
-		//BrandVO vo = dao.selectOneBrand(3);
+		//BrandVO vo = dao.selectOneBrand(1);
 		//System.out.println(vo);
 		
 		//updateBrand() Test ok

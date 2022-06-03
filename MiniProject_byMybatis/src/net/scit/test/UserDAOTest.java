@@ -38,7 +38,7 @@ public class UserDAOTest {
 		//int result = dao.deleteUser("dao");
 		//System.out.println(result + "개 deleteUser() 성공");
 		
-		// chargeAmount() Test ok
+		// changeAmount() Test ok
 		/*
 		UserVO vo = dao.selectOneUser("mk2");
 		vo.setAmount(vo.getAmount() + 2000);
@@ -47,5 +47,4 @@ public class UserDAOTest {
 		System.out.println(result + "개 chargeAmount() 성공");
 		*/
 	}
-	
 }

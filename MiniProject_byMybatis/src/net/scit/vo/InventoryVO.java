@@ -62,7 +62,7 @@ public class InventoryVO {
 
 	@Override
 	public String toString() {
-		return "InventoryVO [seq=" + seq + ", productname=" + productname + ", price=" + price + ", stock=" + stock
-				+ "]";
+		return "InventoryVO [seq=" + seq + ", productnum=" + productnum + ", productname=" + productname + ", price="
+				+ price + ", stock=" + stock + "]";
 	}
 }

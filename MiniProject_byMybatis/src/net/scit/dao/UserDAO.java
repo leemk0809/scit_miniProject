@@ -57,11 +57,11 @@ public class UserDAO {
 		return result;
 	}
 	
-	public int chargeAmount(UserVO vo) {
+	public int changeAmount(UserVO vo) {
 		SqlSession session = factory.openSession();
 		UserMapper mapper = session.getMapper(UserMapper.class);
 		
-		int result = mapper.chargeAmount(vo);
+		int result = mapper.changeAmount(vo);
 		
 		if(result != -1) {
 			session.commit();
