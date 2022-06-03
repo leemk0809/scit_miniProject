@@ -8,3 +8,16 @@ CREATE TABLE usr_m
     amount NUMBER NOT NULL
 );
 
+-- INSERT
+INSERT INTO usr_m
+(usrid,  passwd, name, address, amount)
+VALUES
+('remona', '123', '스티치','서울시', 50000);
+INSERT INTO usr_m
+(usrid,  passwd, name, address, amount)
+VALUES
+('민국상', '123', '민민국국', '서울시', 200000);
+INSERT INTO usr_m
+(usrid,  passwd, name, address, amount)
+VALUES
+('mandu', '123', '보리','서울시', 70000);

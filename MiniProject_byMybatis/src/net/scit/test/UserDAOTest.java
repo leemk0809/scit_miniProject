@@ -11,16 +11,16 @@ public class UserDAOTest {
 		UserDAO dao = new UserDAO();
 		
 		// insertUser() Test ok
-		/*
-		int result = dao.insertUser(new UserVO("dao", "dao", "testname", "testAdd", 10000));
-		System.out.println(result + "개 insertUsert() 성공");
-		*/
+		
+		//int result = dao.insertUser(new UserVO("dao", "dao", "testname", "testAdd", 10000));
+		//System.out.println(result + "개 insertUsert() 성공");
+		
 		
 		// selectAllUser() Test ok
-		/*
+		
 		List<UserVO> list = dao.selectAllUser();
 		list.forEach(x -> System.out.println(x));
-		*/
+		
 		
 		// selectOneUser() Test ok
 		//System.out.println(dao.selectOneUser("mk"));

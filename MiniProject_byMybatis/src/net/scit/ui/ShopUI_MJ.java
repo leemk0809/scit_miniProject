@@ -7,15 +7,18 @@ import java.util.Scanner;
 import net.scit.dao.BrandDAO;
 import net.scit.dao.CategoryDAO;
 import net.scit.dao.ProductDAO;
+import net.scit.dao.UserDAO;
 import net.scit.vo.BrandVO;
 import net.scit.vo.CategoryVO;
 import net.scit.vo.ProductVO;
+import net.scit.vo.UserVO;
 
 public class ShopUI_MJ {
 	Scanner scanner = new Scanner(System.in);
 	CategoryDAO cdao = new CategoryDAO();
 	ProductDAO pdao = new ProductDAO();
 	BrandDAO bdao = new BrandDAO();
+	UserDAO udao = new UserDAO();
 
 	public ShopUI_MJ() {
 		mainUI();
@@ -73,7 +76,7 @@ public class ShopUI_MJ {
 		System.out.println("1. 고객 화면으로");
 		System.out.println("2. 관리자 화면으로");
 		System.out.println("=================================");
-		System.out.print("  > 입력 : ");
+		System.out.print  ("  > 입력 : ");
 	}
 
 	private void adminMenu() {
@@ -92,19 +95,30 @@ public class ShopUI_MJ {
 			case "3":
 				brandManagement();
 				break;
-			// case "4": allUserList(); break;
-			// case "0":
-			// System.out.println("** 프로그램을 종료합니다.");
-			// System.exit(0);
-			// default:
-			// System.out.println("err) 메뉴를 다시 선택해 주세요");
+			case "4": allUserList(); 
+			break;
+			case "0":
+			System.out.println("** 프로그램을 종료합니다.");
+			System.exit(0);
+			default:
+		    System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
+	}
+
+	private void allUserList() {
+		System.out.println("                      << 전체 회원 조회 >> ");
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println("   회원번호	     이름	          아이디	          주소	       충전금액  ");
+		System.out.println("-------------------------------------------------------------------");
+		List<UserVO> vo = udao.selectAllUser();
+		System.out.println(vo);
 	}
 
 	private void brandManagement() {
 		BrandVO vo = new BrandVO();
 		System.out.println("=========[거래처 목록]=========");
+		
 		System.out.println(vo);
 
 		String choice;
@@ -126,12 +140,10 @@ public class ShopUI_MJ {
 			case "4":
 				updateBrand();
 				break;
-
 			default:
 				System.out.println("err) 메뉴를 다시 선택해 주세요");
 			}
 		}
-
 	}
 
 	private void updateBrand() {
