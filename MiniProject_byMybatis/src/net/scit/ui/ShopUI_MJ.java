@@ -6,10 +6,12 @@ import java.util.Scanner;
 
 import net.scit.dao.BrandDAO;
 import net.scit.dao.CategoryDAO;
+import net.scit.dao.InventoryDAO;
 import net.scit.dao.ProductDAO;
 import net.scit.dao.UserDAO;
 import net.scit.vo.BrandVO;
 import net.scit.vo.CategoryVO;
+import net.scit.vo.InventoryVO;
 import net.scit.vo.ProductVO;
 import net.scit.vo.UserVO;
 
@@ -19,6 +21,7 @@ public class ShopUI_MJ {
 	ProductDAO pdao = new ProductDAO();
 	BrandDAO bdao = new BrandDAO();
 	UserDAO udao = new UserDAO();
+	InventoryDAO idao = new InventoryDAO();
 
 	public ShopUI_MJ() {
 		mainUI();
@@ -542,32 +545,81 @@ public class ShopUI_MJ {
 	}
 
 	private void furniture() {
-		int choice;
+		int productnum, lastnum;
+		
+		UserVO uvo = new UserVO();
+		ProductVO pvo = new ProductVO();
+		
+		
 		System.out.println("==========[ 의자 ]==========");
 		List<ProductVO> proList = pdao.selectAllProduct();
 		proList.forEach(x -> System.out.println(x.printList()));
 
 		System.out.println("> 제품 번호 선택 :  ");
-		choice = Integer.parseInt(scanner.nextLine());
+		productnum = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = pdao.selectOneProduct(productnum);
 		
-		ProductVO vo = pdao.selectOneProduct(choice);
-
-		if (choice == vo.getProductnum()) {
-			System.out.println(vo);
-			//System.out.println("brandnum : " + brandnum);
-			System.out.println("                       의자                         ");
-			System.out.println("---------------------------------------------------");
-			System.out.println("   거래처 이름	         가구이름	          판매가	       ");
-			System.out.println("---------------------------------------------------");
-			System.out.printf("%15s %20 %,10d원", 
-							   bdao.selectOneBrand(vo.getBrandnum()).getBrandname(), 
-							   
-							   pdao.selectOneProduct(choice).getProductname(),
-							   pdao.selectOneProduct(choice).getPrice());
-			
+		if(vo == null) {
+			System.out.println("** 없는 제품 입니다. 다시 입력해 주세요");
+			return;
 		}
-	}//"%3d %15s %,9d원
-
+		
+		System.out.println("===============[" + vo.getProductname() + "]===============");
+		System.out.println(" 브랜드 " + bdao.selectOneBrand(vo.getBrandnum()).getBrandname());
+		System.out.println(" 상품명 " + vo.getProductname());
+		System.out.println(" 판매가 " + vo.getPrice());
+		System.out.println(" 배송방법 : 자체배송");
+		System.out.println("==============================================");
+		System.out.println();
+		System.out.println("1. 구입하기");
+		System.out.println("2. 돌아가기");
+		System.out.println("선택>  ");
+		lastnum = Integer.parseInt(scanner.nextLine());
+		
+		switch(lastnum) {
+		case 1 : buyItem(productnum); break;
+		case 2 : return;
+		default : 
+			System.out.println("** 다시 입력해주세요.");
+		}
+	}
+	
+	private void buyItem(int productnum) {
+		UserVO user = udao.selectOneUser("민국상");
+		ProductVO product = pdao.selectOneProduct(productnum);
+		
+		// stock이 0일때 판매금지(RETURN) // 추가 예정
+		
+		// 유저가 살 돈이 있는지 확인
+		if(user.getAmount() < product.getPrice()) {
+			System.out.println("** 잔고가 모자랍니다. 충전해 주세요.");
+			return;
+		}
+		
+		// 유저 돈을 빼가자. ( 잔고 - 물건 값)
+		int amount = user.getAmount() - product.getPrice();
+		user.setAmount(amount);
+		// db반영
+		int result = udao.changeAmount(user);
+		if(result != -1) {
+			System.out.println("금액이 빠졌다....");
+		}
+	
+		// 재고를 줄이자. (재고, -1)
+		int result2 = idao.subtractStock(productnum, 1);
+		
+		if(result2 != -1) {
+			System.out.println("구매가 완료 되었습니다.");
+		}
+	}
+	
+	/*
+	 * private void buyItem(int choice) {
+	 * idao.subtractStock(pdao.selectOneProduct(choice).getProductnum(), 1);
+	 * 
+	 * }
+	 */
 	private void userUI() {
 		System.out.println("==========[ 고객 화면 ]==========");
 		System.out.println("1. 쇼핑하기");

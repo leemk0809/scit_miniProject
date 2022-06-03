@@ -7,6 +7,10 @@ public class UserVO {
 	private String address;
 	private int amount;
 	
+	public UserVO() {
+		super();
+	}
+	
 	public UserVO(String usrid, String passwd, String usrname, String address, int amount) {
 		super();
 		this.usrid = usrid;
