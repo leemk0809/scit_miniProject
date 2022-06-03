@@ -28,4 +28,11 @@
 		DELETE usr_m
 		WHERE usrid = #{usrid}
 	</delete>
+	
+	<update id="chargeAmount" parameterType="UserVO">
+		UPDATE usr_m
+		SET
+			amount = #{amount}
+		WHERE usrid = #{usrid}
+	</update>
 </mapper>

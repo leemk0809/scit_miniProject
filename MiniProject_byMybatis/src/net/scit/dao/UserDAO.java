@@ -56,4 +56,17 @@ public class UserDAO {
 			
 		return result;
 	}
+	
+	public int chargeAmount(UserVO vo) {
+		SqlSession session = factory.openSession();
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		
+		int result = mapper.chargeAmount(vo);
+		
+		if(result != -1) {
+			session.commit();
+		}
+		
+		return result;
+	}
 }
