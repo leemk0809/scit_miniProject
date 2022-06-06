@@ -69,8 +69,9 @@ public class ProductVO {
 
 	@Override
 	public String toString() {
-		return "ProductVO [brandnum=" + brandnum + ", categorynum=" + categorynum + ", productnum=" + productnum
-				+ ", productname=" + productname + ", price=" + price + "]";
+		
+		String temp = String.format("%5d %10d %10d %30s %,-5d¿ø %n", brandnum, categorynum, productnum, productname, price);
+		return temp;
 	}
 
 	public String printList() {

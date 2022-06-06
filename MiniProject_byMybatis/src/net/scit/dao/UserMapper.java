@@ -20,4 +20,7 @@ public interface UserMapper {
 	public int deleteUser(String usrid);
 	
 	public int changeAmount(UserVO vo);
+
+	public UserVO loginUser(UserVO vo);
+
 }

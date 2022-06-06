@@ -22,6 +22,11 @@ public class CategoryVO {
 	public void setCategorynum(int categorynum) {
 		this.categorynum = categorynum;
 	}
+	
+
+	public int getCategorynum() {
+		return categorynum;
+	}
 
 	public String getCategoryname() {
 		return categoryname;

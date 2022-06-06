@@ -6,33 +6,46 @@
 <mapper namespace="net.scit.dao.UserMapper">
 	<insert id="insertUser" parameterType="UserVO">
 		INSERT INTO usr_m
-			(usrid, passwd, usrname, address, amount)
+		(usrid, passwd, usrname, address, amount)
 		VALUES
-			(#{usrid}, #{passwd}, #{usrname}, #{address}, #{amount})
+		(#{usrid}, #{passwd}, #{usrname}, #{address}, #{amount})
 	</insert>
-	<select id="selectOneUser" parameterType="String" resultType="UserVO">
+	
+	<select id="selectOneUser" parameterType="String"
+		resultType="UserVO">
 		SELECT * FROM usr_m
 		WHERE usrid = #{usrid}
 	</select>
+	
 	<select id="selectAllUser" resultType="UserVO">
 		SELECT * FROM usr_m
 	</select>
+	
 	<update id="updateUserInfo" parameterType="UserVO">
 		UPDATE usr_m
 		SET
-		    usrname = #{usrname},	
-		    address = #{address}
+		usrname = #{usrname},
+		address = #{address}
 		WHERE usrid = #{usrid}
 	</update>
+	
 	<delete id="deleteUser" parameterType="String">
 		DELETE usr_m
-		WHERE usrid = #{usrid}
+		WHERE usrid =
+		#{usrid}
 	</delete>
-	
+
 	<update id="changeAmount" parameterType="UserVO">
 		UPDATE usr_m
 		SET
-			amount = #{amount}
+		amount = #{amount}
 		WHERE usrid = #{usrid}
 	</update>
+
+	<select id="loginUser" resultType="UserVO">
+		SELECT usrid, passwd, usrname, address, amount
+		FROM usr_m
+		where usrid = #{usrid} AND passwd = #{passwd}
+	</select>
+
 </mapper>

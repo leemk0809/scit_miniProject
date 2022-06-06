@@ -22,6 +22,7 @@ public class ShopUI_MJ {
 	BrandDAO bdao = new BrandDAO();
 	UserDAO udao = new UserDAO();
 	InventoryDAO idao = new InventoryDAO();
+	String adminId = "admin";
 
 	public ShopUI_MJ() {
 		mainUI();
@@ -34,11 +35,12 @@ public class ShopUI_MJ {
 			choice = scanner.nextLine();
 
 			switch (choice) {
-			// case "1": registerUser(); break;
+			case "1":
+				registerUser();
+				break;
 			case "2":
 				login();
 				break;
-			// case "3": widthdrawUser(); break;
 			case "0":
 				System.out.println("** 프로그램을 종료합니다.");
 				System.exit(0);
@@ -48,11 +50,61 @@ public class ShopUI_MJ {
 		}
 	}
 
+	private void registerUser() {
+		String usrid, passwd, usrname, address;
+		int amount;
+		System.out.print("*  아이디   :  ");
+		usrid = scanner.nextLine();
+
+		if (idCheck(usrid)) {
+			System.out.println("** 이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요");
+			System.out.println();
+			return;
+		}
+
+		System.out.print("*  비밀번호 :  ");
+		passwd = scanner.nextLine();
+		if (passwd.trim().equals("")) {
+			System.out.println("err) 비밀번호를 입력해 주세요");
+			return;
+		}
+
+		System.out.print("*  이름    :  ");
+		usrname = scanner.nextLine();
+		if (usrname.trim().equals("")) {
+			System.out.println("err) 이름을 입력해 주세요");
+			return;
+		}
+
+		System.out.print("*  주소    :  ");
+		address = scanner.nextLine();
+		if (address.trim().equals("")) {
+			System.out.println("err) 주소를 입력해 주세요");
+			return;
+		}
+		System.out.print("*  충전금액 :  ");
+		amount = Integer.parseInt(scanner.nextLine());
+		if (amount == 0) {
+			System.out.println("** 충전금액을 입력해 주세요 : ");
+		}
+
+		UserVO vo = new UserVO(usrid, passwd, usrname, address, amount);
+		udao.insertUser(vo);
+		System.out.printf("회원가입이 완료되었습니다. 즐거운 쇼핑되세요 ^-^ %n");
+
+	}
+
+	private boolean idCheck(String usrid) {
+		UserVO vo = udao.selectOneUser(usrid);
+		if (vo != null)
+			return true;
+		return false;
+	}
+
 	private void mainMenu() {
-		System.out.println("=========[로그인]=========");
+		System.out.println("=========[로그인]==========");
 		System.out.println("1. 회원가입");
 		System.out.println("2. 로그인");
-		System.out.println("3. 탈퇴");
 		System.out.println("==========================");
 		System.out.print("  > 입력 : ");
 	}
@@ -74,12 +126,31 @@ public class ShopUI_MJ {
 		}
 	}
 
-	private void loginMenu() {
-		System.out.println("=========[임시 로그인 화면]=========");
-		System.out.println("1. 고객 화면으로");
-		System.out.println("2. 관리자 화면으로");
-		System.out.println("=================================");
-		System.out.print("  > 입력 : ");
+	public UserVO loginMenu() {
+		String usrid, passwd;
+		UserVO avo = udao.selectOneUser(adminId);
+		UserVO vo = new UserVO();
+		System.out.println("=========[ 로그인 ]=========");
+		System.out.print("* 아이디   : ");
+		usrid = scanner.nextLine();
+
+		System.out.print("* 비밀번호  : ");
+		passwd = scanner.nextLine();
+
+		vo.setUsrid(usrid);
+		vo.setPasswd(passwd);
+		UserVO loginVo = udao.loginUser(vo);
+
+		if (loginVo == null) {
+			System.out.println("아이디 비밀번호가 일치하지 않습니다. 다시 입력해주세요");
+			loginMenu();
+			return null;
+		}
+		if (usrid.equals(avo.getUsrid())) {
+			adminMenu();
+		}
+		userMenu();
+		return loginVo;
 	}
 
 	private void adminMenu() {
@@ -105,7 +176,7 @@ public class ShopUI_MJ {
 				System.out.println("** 프로그램을 종료합니다.");
 				System.exit(0);
 			default:
-				System.out.println("err) 메뉴를 다시 선택해 주세요");
+				System.out.println("err) 메뉴4를 다시 선택해 주세요");
 			}
 		}
 	}
@@ -240,7 +311,7 @@ public class ShopUI_MJ {
 				updateProduct();
 				break;
 			default:
-				System.out.println("err) 메뉴를 다시 선택해 주세요");
+				System.out.println("err) 메뉴6를 다시 선택해 주세요");
 			}
 		}
 	}
@@ -317,10 +388,10 @@ public class ShopUI_MJ {
 	private void productList() {
 		List<ProductVO> plist = pdao.selectAllProduct();
 		if (plist.isEmpty()) {
-			System.out.println("** 가입한 회원이 없습니다.");
+			System.out.println("** 등록된 제품이 없습니다.");
 			return;
 		}
-
+		System.out.println("brandnum  categorynum  productnum        productname       price");
 		Iterator<ProductVO> iter = plist.iterator();
 		while (iter.hasNext())
 			System.out.println(iter.next());
@@ -363,7 +434,7 @@ public class ShopUI_MJ {
 	}
 
 	private void productUI() {
-		System.out.println("=========[물건 관리]=========");
+		System.out.println("=========[제품 관리]=========");
 		System.out.println("      1. 추 가");
 		System.out.println("      2. 전체 조회");
 		System.out.println("      3. 조 회");
@@ -395,7 +466,7 @@ public class ShopUI_MJ {
 				break;
 
 			default:
-				System.out.println("err) 메뉴를 다시 선택해 주세요");
+				System.out.println("err) 메뉴1를 다시 선택해 주세요");
 
 			}
 		}
@@ -519,7 +590,7 @@ public class ShopUI_MJ {
 			 * deleteUser(); break; case "5": charge(); break;
 			 */
 			default:
-				System.out.println("err) 메뉴를 다시 선택해 주세요");
+				System.out.println("err) 메뉴2를 다시 선택해 주세요");
 			}
 		}
 
@@ -537,21 +608,27 @@ public class ShopUI_MJ {
 		case "1":
 			furniture();
 			break;
-		// case "2" :
-		// fabric(); break;
+		case "2":
+			fabric();
+			break;
 
 		}
 
 	}
 
+	private void fabric() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void furniture() {
 		int productnum, lastnum;
-		
-		UserVO uvo = new UserVO();
+		CategoryVO cvo = new CategoryVO();
 		ProductVO pvo = new ProductVO();
-		
-		
+	//(pdao.selectOneProduct(choice).getProductnum(), 1
 		System.out.println("==========[ 의자 ]==========");
+		
+		
 		List<ProductVO> proList = pdao.selectAllProduct();
 		proList.forEach(x -> System.out.println(x.printList()));
 
@@ -559,12 +636,12 @@ public class ShopUI_MJ {
 		productnum = Integer.parseInt(scanner.nextLine());
 
 		ProductVO vo = pdao.selectOneProduct(productnum);
-		
-		if(vo == null) {
+
+		if (vo == null) {
 			System.out.println("** 없는 제품 입니다. 다시 입력해 주세요");
 			return;
 		}
-		
+
 		System.out.println("===============[" + vo.getProductname() + "]===============");
 		System.out.println(" 브랜드 " + bdao.selectOneBrand(vo.getBrandnum()).getBrandname());
 		System.out.println(" 상품명 " + vo.getProductname());
@@ -576,58 +653,56 @@ public class ShopUI_MJ {
 		System.out.println("2. 돌아가기");
 		System.out.println("선택>  ");
 		lastnum = Integer.parseInt(scanner.nextLine());
-		
-		switch(lastnum) {
-		case 1 : buyItem(productnum); break;
-		case 2 : return;
-		default : 
+
+		switch (lastnum) {
+		case 1:
+			buyItem(productnum);
+			break;
+		case 2:
+			return;
+		default:
 			System.out.println("** 다시 입력해주세요.");
 		}
 	}
-	
+
 	private void buyItem(int productnum) {
+		// 재료부터 모은다
 		UserVO user = udao.selectOneUser("민국상");
 		ProductVO product = pdao.selectOneProduct(productnum);
-		
+
 		// stock이 0일때 판매금지(RETURN) // 추가 예정
-		
+
 		// 유저가 살 돈이 있는지 확인
-		if(user.getAmount() < product.getPrice()) {
+		if (user.getAmount() < product.getPrice()) {
 			System.out.println("** 잔고가 모자랍니다. 충전해 주세요.");
 			return;
 		}
-		
+
 		// 유저 돈을 빼가자. ( 잔고 - 물건 값)
 		int amount = user.getAmount() - product.getPrice();
 		user.setAmount(amount);
 		// db반영
 		int result = udao.changeAmount(user);
-		if(result != -1) {
+		if (result != -1) {
 			System.out.println("금액이 빠졌다....");
 		}
-	
+
 		// 재고를 줄이자. (재고, -1)
 		int result2 = idao.subtractStock(productnum, 1);
-		
-		if(result2 != -1) {
+
+		if (result2 != -1) {
 			System.out.println("구매가 완료 되었습니다.");
 		}
 	}
-	
-	/*
-	 * private void buyItem(int choice) {
-	 * idao.subtractStock(pdao.selectOneProduct(choice).getProductnum(), 1);
-	 * 
-	 * }
-	 */
+
 	private void userUI() {
-		System.out.println("==========[ 고객 화면 ]==========");
+		System.out.println("========[ 고객 화면 ]========");
 		System.out.println("1. 쇼핑하기");
 		System.out.println("2. 내 정보 확인");
 		System.out.println("3. 내 정보 수정");
 		System.out.println("4. 탈퇴하기");
 		System.out.println("5. 캐쉬 충전");
-		System.out.println("=================================");
+		System.out.println("===========================");
 		System.out.print("   선택>   ");
 	}
 

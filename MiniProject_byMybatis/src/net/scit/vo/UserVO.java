@@ -6,10 +6,11 @@ public class UserVO {
 	private String usrname;
 	private String address;
 	private int amount;
-	
+
 	public UserVO() {
 		super();
 	}
+
 	
 	public UserVO(String usrid, String passwd, String usrname, String address, int amount) {
 		super();
@@ -18,6 +19,12 @@ public class UserVO {
 		this.usrname = usrname;
 		this.address = address;
 		this.amount = amount;
+	}
+	
+	public UserVO(String usrid, String passwd) {
+		super();
+		this.usrid = usrid;
+		this.passwd = passwd;
 	}
 
 	public String getUsrid() {
@@ -62,9 +69,8 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		return "UserVO [usrid=" + usrid + ", passwd=" + passwd + ", usrname=" + usrname + ", address=" + address
-				+ ", amount=" + amount + "]";
+		return "UserVO [usrid=" + usrid + ", passwd=" + passwd + ", name=" + usrname + ", address=" + address + ", amount="
+				+ amount + "]";
 	}
-	
-	
+
 }

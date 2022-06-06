@@ -8,6 +8,18 @@ CREATE TABLE inventory_m
 );
 CREATE SEQUENCE inventory_m_seq;
 
+DROP SEQUENCE product_m_seq;
+DROP TABLE product_m;
+CREATE TABLE product_m
+	(
+		brandnum    REFERENCES brand_m(brandnum),
+		categorynum REFERENCES categories_m(categorynum),
+		productnum  NUMBER PRIMARY KEY,
+		productname VARCHAR2(100),
+		price       NUMBER
+	);
+CREATE SEQUENCE product_m_seq;
+
 DROP SEQUENCE brand_m_seq;
 DROP TABLE brand_m;
 CREATE TABLE brand_m
@@ -28,17 +40,7 @@ CREATE TABLE categories_m
 	);
 CREATE SEQUENCE categories_m_seq;
 
-DROP SEQUENCE product_m_seq;
-DROP TABLE product_m;
-CREATE TABLE product_m
-	(
-		brandnum    REFERENCES brand_m(brandnum),
-		categorynum REFERENCES categories_m(categorynum),
-		productnum  NUMBER PRIMARY KEY,
-		productname VARCHAR2(100),
-		price       NUMBER
-	);
-CREATE SEQUENCE product_m_seq;
+
 
 
 INSERT INTO categories_m (categorynum, categoryname) VALUES (categories_m_seq.nextval, '°¡±¸');
