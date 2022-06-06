@@ -39,7 +39,7 @@ public class ProductVO {
 		return categorynum;
 	}
 
-	public void setCategorynum(int categorynum) {
+	public void setCategorynum() {
 		this.categorynum = categorynum;
 	}
 
@@ -70,12 +70,13 @@ public class ProductVO {
 	@Override
 	public String toString() {
 		
-		String temp = String.format("%5d %10d %10d %30s %,-5d원 %n", brandnum, categorynum, productnum, productname, price);
+		String temp = String.format("%3d %9d %9d |%s %,3d원 %n", 
+									brandnum, categorynum, productnum, productname, price);
 		return temp;
 	}
 
 	public String printList() {
-		String temp = String.format("%3d %15s %,9d원", productnum, productname, price);
+		String temp = String.format("%5d   |  %s  | %,d원", productnum, productname, price);
 		return temp;
 	}
 

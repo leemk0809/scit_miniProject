@@ -22,7 +22,7 @@ public class ShopUI_MJ {
 	BrandDAO bdao = new BrandDAO();
 	UserDAO udao = new UserDAO();
 	InventoryDAO idao = new InventoryDAO();
-	String adminId = "admin";
+	String user = "해리스타일스";
 
 	public ShopUI_MJ() {
 		mainUI();
@@ -128,7 +128,7 @@ public class ShopUI_MJ {
 
 	public UserVO loginMenu() {
 		String usrid, passwd;
-		UserVO avo = udao.selectOneUser(adminId);
+		UserVO avo = udao.selectOneUser("admin");
 		UserVO vo = new UserVO();
 		System.out.println("=========[ 로그인 ]=========");
 		System.out.print("* 아이디   : ");
@@ -391,7 +391,8 @@ public class ShopUI_MJ {
 			System.out.println("** 등록된 제품이 없습니다.");
 			return;
 		}
-		System.out.println("brandnum  categorynum  productnum        productname       price");
+		System.out.println("Brand    Category  Product     Product Name     Price");
+		System.out.println("Number   Number    Number");
 		Iterator<ProductVO> iter = plist.iterator();
 		while (iter.hasNext())
 			System.out.println(iter.next());
@@ -617,20 +618,69 @@ public class ShopUI_MJ {
 	}
 
 	private void fabric() {
-		// TODO Auto-generated method stub
-		
+		int productnum, lastnum;
+
+		System.out.println("==========[ 패브릭 ]==========");
+		System.out.println(" Product        Product Name        Price");
+		System.out.println(" Number            ");
+
+		List<ProductVO> proList = pdao.selectAllProduct();
+
+		for (int i = 0; i < proList.size(); i++) {
+			if (proList.get(i).getCategorynum() == 2) {
+				System.out.println(proList.get(i)); // 이게 전체조회용이라.. 밑에 거로 바꾸기
+			}
+		}
+		// proList.forEach(x -> System.out.println(x.printList()));
+
+		System.out.println("> 제품 번호 선택 :  ");
+		productnum = Integer.parseInt(scanner.nextLine());
+
+		ProductVO vo = pdao.selectOneProduct(productnum);
+
+		if (vo == null) {
+			System.out.println("** 없는 제품 입니다. 다시 입력해 주세요");
+			return;
+		}
+
+		System.out.println("===============[" + vo.getProductname() + "]===============");
+		System.out.println(" 브랜드 " + bdao.selectOneBrand(vo.getBrandnum()).getBrandname());
+		System.out.println(" 상품명 " + vo.getProductname());
+		System.out.println(" 판매가 " + vo.getPrice());
+		System.out.println(" 배송방법 : 자체배송");
+		System.out.println("==============================================");
+		System.out.println();
+		System.out.println("1. 구입하기");
+		System.out.println("2. 돌아가기");
+		System.out.println("선택>  ");
+		lastnum = Integer.parseInt(scanner.nextLine());
+
+		switch (lastnum) {
+		case 1:
+			buyItem(productnum);
+			break;
+		case 2:
+			return;
+		default:
+			System.out.println("** 다시 입력해주세요.");
+		}
 	}
 
 	private void furniture() {
 		int productnum, lastnum;
-		CategoryVO cvo = new CategoryVO();
-		ProductVO pvo = new ProductVO();
-	//(pdao.selectOneProduct(choice).getProductnum(), 1
+
 		System.out.println("==========[ 의자 ]==========");
-		
-		
+		System.out.println(" Product        Product Name        Price");
+		System.out.println(" Number            ");
+
 		List<ProductVO> proList = pdao.selectAllProduct();
-		proList.forEach(x -> System.out.println(x.printList()));
+
+		for (int i = 0; i < proList.size(); i++) {
+			if (proList.get(i).getCategorynum() == 1) {
+				System.out.println(proList.get(i)); // 이게 전체조회용이라.. 밑에 거로 바꾸기
+			}
+		}
+		// proList.forEach(x -> System.out.println(x.printList()));
 
 		System.out.println("> 제품 번호 선택 :  ");
 		productnum = Integer.parseInt(scanner.nextLine());
@@ -667,10 +717,15 @@ public class ShopUI_MJ {
 
 	private void buyItem(int productnum) {
 		// 재료부터 모은다
-		UserVO user = udao.selectOneUser("민국상");
+		UserVO user = udao.selectOneUser("harry");
 		ProductVO product = pdao.selectOneProduct(productnum);
-
-		// stock이 0일때 판매금지(RETURN) // 추가 예정
+		InventoryVO ivo = idao.selectOneInventory(productnum);
+		
+		// stock이 0일때 판매금지(RETURN) // 추가 예정 // 이부분 오류... 
+		if (idao.selectOneInventory(productnum).getStock()  == 0) {
+			System.out.println("죄송합니다. 이 상품은 현재 품절입니다. 다른 상품으로 다시 선택해주세요");
+			
+		}
 
 		// 유저가 살 돈이 있는지 확인
 		if (user.getAmount() < product.getPrice()) {
@@ -684,14 +739,15 @@ public class ShopUI_MJ {
 		// db반영
 		int result = udao.changeAmount(user);
 		if (result != -1) {
-			System.out.println("금액이 빠졌다....");
+			System.out.println(user.getUsrname() + "님의 충전금액에서 " + product.getPrice() + "원이 차감되었습니다. 현재 잔액은 "
+					+ user.getAmount() + "원 입니다.");
 		}
 
 		// 재고를 줄이자. (재고, -1)
 		int result2 = idao.subtractStock(productnum, 1);
 
 		if (result2 != -1) {
-			System.out.println("구매가 완료 되었습니다.");
+			System.out.println("구매가 완료 되었습니다. ");
 		}
 	}
 

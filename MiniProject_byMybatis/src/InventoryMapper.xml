@@ -11,8 +11,21 @@
 		    inventory_m i, product_m p
 		WHERE
 		    i.productnum = p.productnum
-		    AND p.brandnum = #{brandnum}
+		AND 
+		    p.brandnum = #{brandnum}
 	</select>
+	
+	<select id="selectOneInventory" parameterType="int" resultType="InventoryVO" >
+		SELECT
+			i.seq, p.productnum, p.productname, p.price, i.stock
+		FROM
+			inventory_m i, product_m p
+		WHERE
+			i.productnum = p.productnum
+		AND 
+			p.productnum = #{productnum}
+	</select>
+	
 	<insert id="insertInventory" parameterType="int">
 		INSERT INTO inventory_m
 			(seq, productnum, stock)

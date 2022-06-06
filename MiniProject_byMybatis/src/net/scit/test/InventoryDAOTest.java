@@ -15,8 +15,8 @@ public class InventoryDAOTest {
 
 		// selectAllInventory() Test ok
 		List<InventoryVO> list = dao.selectAllInventory(1);
-		System.out.println(list.size());
-		list.forEach(x -> System.out.println(x));
+		//System.out.println(list.size());
+		//list.forEach(x -> System.out.println(x));
 		
 		// insertInventory() Test ok
 		/*
@@ -50,6 +50,9 @@ public class InventoryDAOTest {
 		// subtractStock() Test ok
 		//int result = dao.subtractStock(1, 3);
 		//System.out.println(result + "°³ subtractStock() ¿Ï·á");
+		
+		//selectOneInventory() Test ok
+		//System.out.println(dao.selectOneInventory(2));
 		
 	}
 }

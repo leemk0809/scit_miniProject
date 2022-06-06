@@ -19,6 +19,16 @@ public class InventoryDAO {
 		
 		return mapper.selectAllInventory(brandnum);
 	}
+	public InventoryVO selectOneInventory(int productnum) {
+		SqlSession session = null;
+		session = factory.openSession();
+		InventoryMapper mapper = session.getMapper(InventoryMapper.class);
+
+		InventoryVO vo = mapper.selectOneInventory(productnum);
+		return vo;
+	}
+	
+	
 	
 	public int insertInventory(int productnum, int stock) {
 		SqlSession session = null;

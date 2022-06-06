@@ -24,7 +24,7 @@ public class CategoryVO {
 	}
 	
 
-	public int getCategorynum() {
+	public int getCategorynum(int i) {
 		return categorynum;
 	}
 
