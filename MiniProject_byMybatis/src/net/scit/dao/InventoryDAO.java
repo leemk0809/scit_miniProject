@@ -1,6 +1,7 @@
 package net.scit.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,6 +20,7 @@ public class InventoryDAO {
 		
 		return mapper.selectAllInventory(brandnum);
 	}
+	
 	public InventoryVO selectOneInventory(int productnum) {
 		SqlSession session = null;
 		session = factory.openSession();

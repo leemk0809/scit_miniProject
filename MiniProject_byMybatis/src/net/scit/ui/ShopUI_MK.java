@@ -111,8 +111,9 @@ public class ShopUI_MK {
 
 	private void brandManagement() {
 		BrandVO vo = new BrandVO();
+		List<BrandVO> list = bdao.selectAllBrand();
 		System.out.println("=========[거래처 목록]=========");
-		System.out.println(vo);
+		list.forEach(x -> System.out.println(x));
 
 		String choice;
 
@@ -207,6 +208,7 @@ public class ShopUI_MK {
 		}
 		
 		System.out.printf("=========[ %s 거래처 물건 ]=========\n", vo.getBrandname());
+		System.out.printf(" 순번 | \t 제품명 \t\t | \t 가격 \t\t | \t수량\n");
 		List<InventoryVO> list = idao.selectAllInventory(brandnum);
 		list.forEach(x -> System.out.println(x));
 		System.out.println("====================================");
@@ -521,15 +523,16 @@ public class ShopUI_MK {
 	}
 
 	private void categoryList() {
-
+		System.out.println();
 		List<CategoryVO> clist = cdao.selectAllCategory();
 		if (clist.isEmpty()) {
 			System.out.println("카테고리가 없습니다.");
 			return;
 		}
-		Iterator<CategoryVO> iter = clist.iterator();
-		while (iter.hasNext())
-			System.out.println(iter.next());
+		System.out.println("========[ 카테고리 목록] =========");
+		System.out.println("번호 | 카테고리명 ");
+		clist.forEach(x -> System.out.println(x.printList()));
+		System.out.println();
 	}
 
 	private void registerCategory() {

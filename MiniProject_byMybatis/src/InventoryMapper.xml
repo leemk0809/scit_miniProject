@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="net.scit.dao.InventoryMapper">
+	
+<mapper namespace="net.scit.dao.InventoryMapper">	
 	<select id="selectAllInventory" resultType="InventoryVO" parameterType="int">
 		SELECT 
-    		i.seq, p.productnum, p.productname, p.price, i.stock
+    		i.seq as "seq" , p.productnum as "productnum", p.productname as "productname", p.price as "price", i.stock as "stock"
 		FROM 
 		    inventory_m i, product_m p
 		WHERE

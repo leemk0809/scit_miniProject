@@ -41,4 +41,7 @@ public class CategoryVO {
 		return "CategoryVO [categorynum=" + categorynum + ", categoryname=" + categoryname + "]";
 	}
 
+	public String printList() {
+		return String.format("%4d | \t%s \t", categorynum, categoryname);
+	}
 }

@@ -18,8 +18,9 @@ public class CategoryDAOTest {
 
 
 		//selectAllCategory()  Test ok
+		//System.out.println("번호 | 카테고리명 ");
 		//List<CategoryVO> list = dao.selectAllCategory();  
-		//list.forEach(x->System.out.println(x));
+		//list.forEach(x->System.out.println(x.printList()));
 		
 		
 		

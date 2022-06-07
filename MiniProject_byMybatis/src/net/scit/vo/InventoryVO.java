@@ -65,4 +65,8 @@ public class InventoryVO {
 		return "InventoryVO [seq=" + seq + ", productnum=" + productnum + ", productname=" + productname + ", price="
 				+ price + ", stock=" + stock + "]";
 	}
+	
+	public String printList() {
+		return String.format("%5d | \t %s \t\t | \t %,d¿ø \t | \t%d°³", seq, productname, price, stock);
+	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import net.scit.dao.InventoryDAO;
 import net.scit.dao.ProductDAO;
 import net.scit.vo.InventoryVO;
-import net.scit.vo.ProductVO;
 
 public class InventoryDAOTest {
 
@@ -14,9 +13,14 @@ public class InventoryDAOTest {
 		ProductDAO pDao = new ProductDAO();
 
 		// selectAllInventory() Test ok
-		List<InventoryVO> list = dao.selectAllInventory(1);
-		//System.out.println(list.size());
-		//list.forEach(x -> System.out.println(x));
+		//System.out.println("=========[ 오블리크테이블 거래처 물건 ]=========");
+		//System.out.printf(" 순번 | \t 제품명 \t\t | \t 가격 \t\t | \t수량\n");
+		//List<InventoryVO> list = dao.selectAllInventory(5);
+		//list.forEach(x -> System.out.println(x.printList()));
+		
+		// selectAllInventoryByMap() Test 
+		//dao.selectAllInventorybyMap(1);
+		//System.out.println(map);
 		
 		// insertInventory() Test ok
 		/*
