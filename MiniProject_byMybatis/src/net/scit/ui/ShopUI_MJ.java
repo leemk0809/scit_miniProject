@@ -721,10 +721,10 @@ public class ShopUI_MJ {
 		ProductVO product = pdao.selectOneProduct(productnum);
 		InventoryVO ivo = idao.selectOneInventory(productnum);
 		
-		// stock이 0일때 판매금지(RETURN) // 추가 예정 // 이부분 오류... 
-		if (idao.selectOneInventory(productnum).getStock()  == 0) {
-			System.out.println("죄송합니다. 이 상품은 현재 품절입니다. 다른 상품으로 다시 선택해주세요");
-			
+		// stock이 0일때 판매금지(RETURN) // 추가 예정 
+		if (idao.selectOneInventory(productnum).getStock() <= 0) {
+			System.out.println("** 죄송합니다. 이 상품은 현재 품절입니다. 다른 상품으로 다시 선택해주세요.");
+			return;
 		}
 
 		// 유저가 살 돈이 있는지 확인
@@ -739,6 +739,7 @@ public class ShopUI_MJ {
 		// db반영
 		int result = udao.changeAmount(user);
 		if (result != -1) {
+			System.out.println(" * 구매해주셔서 감사합니다 최대한 빠르게 배송해드릴게요 ^-^*");
 			System.out.println(user.getUsrname() + "님의 충전금액에서 " + product.getPrice() + "원이 차감되었습니다. 현재 잔액은 "
 					+ user.getAmount() + "원 입니다.");
 		}
