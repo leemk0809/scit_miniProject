@@ -174,7 +174,6 @@ public class ShopUI_SUM {
 	}
 
 	private void allUserList() {
-		UserVO uvo = new UserVO();
 		System.out.println("                   << 전체 회원 조회 >> ");
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("   아이디	         이름	      주소	      충전금액  ");
@@ -206,9 +205,9 @@ public class ShopUI_SUM {
 			case "2":
 				brandDetailed();
 				break;
-			case "3":
-				deleteBrand();
-				break;
+			//case "3": // 위험함으로 삭제
+			//	deleteBrand();
+			//	break;
 			case "4":
 				updateBrand();
 				break;
@@ -227,23 +226,32 @@ public class ShopUI_SUM {
 		System.out.println("> 거래처 번호: ");
 		brandnum = Integer.parseInt(scanner.nextLine());
 
-		if (productnumCheck(brandnum)) {
-			System.out.println("** 중복된 거래처가 존재합니다.");
+		if (!productnumCheck(brandnum)) {
+			System.out.println("** 거래처가 존재하지 않습니다. 다시 입력해주세요.");
 			return;
 		}
+		
+		BrandVO vo = bdao.selectOneBrand(brandnum);
+		
 		System.out.println("> 거래처 이름: ");
 		brandname = scanner.nextLine();
+		vo.setBrandname(brandname);
+		
 		System.out.println("> 거래처 담당자 이름: ");
 		managername = scanner.nextLine();
+		vo.setManagername(managername);
+		
 		System.out.println("> 거래처 메일: ");
 		email = scanner.nextLine();
-
-		BrandVO vo = new BrandVO(brandnum, brandname, managername, email);
-		// int result = bdao.(vo); 여기서부터하기
-		// System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
+		vo.setEmail(email);
+	
+		int result = bdao.updateBrand(vo); 
+		System.out.printf("%d개의 제품 등록이 완료되었습니다.%n", result);
 
 	}
 
+	// 
+	/*
 	private void deleteBrand() {
 		String answer;
 		int num;
@@ -272,6 +280,7 @@ public class ShopUI_SUM {
 		}
 
 	}
+	*/
 
 	private void brandDetailed() {
 		System.out.println("");
@@ -466,11 +475,34 @@ public class ShopUI_SUM {
 			System.out.println("** 등록된 제품이 없습니다.");
 			return;
 		}
-		System.out.println("Brand    Category  Product     Product Name     Price");
-		System.out.println("Number   Number    Number");
-		Iterator<ProductVO> iter = plist.iterator();
-		while (iter.hasNext())
-			System.out.println(iter.next());
+		List<CategoryVO> clist = cdao.selectAllCategory();
+		List<BrandVO> blist = bdao.selectAllBrand();
+		
+		
+		System.out.println("브랜드 \t\t 카테고리 \t 제품번호 \t 제품명 \t\t\t 가격");
+				
+		for(int i = 0 ; i < plist.size(); i++) {
+			String categoryname="";
+			String brandname="";
+			
+			int categorynum = plist.get(i).getCategorynum();
+			for(int j = 0 ; j < clist.size(); j++) {
+				if(clist.get(j).getCategorynum() == categorynum) {
+					categoryname = clist.get(j).getCategoryname();
+					break;
+				}
+			}
+			
+			int brandnum = plist.get(i).getBrandnum();
+			for(int j = 0 ; j < blist.size(); j++) {
+				if(blist.get(j).getBrandnum() == brandnum) {
+					brandname = blist.get(j).getBrandname();
+					break;
+				}
+			}
+			
+			System.out.printf("%s \t %10s \t %10s \n", brandname, categoryname, plist.get(i).printList());
+		}
 	}
 
 	private void registerProduct() {
@@ -893,7 +925,6 @@ public class ShopUI_SUM {
 		// 재료부터 모은다
 		UserVO user = currentUser;
 		ProductVO product = pdao.selectOneProduct(productnum);
-		InventoryVO ivo = idao.selectOneInventory(productnum);
 
 		// stock이 0일때 판매금지(RETURN) // 추가 예정
 		if (idao.selectOneInventory(productnum).getStock() <= 0) {

@@ -3,12 +3,14 @@ package net.scit.test;
 import java.util.List;
 
 import net.scit.dao.BrandDAO;
-import net.scit.vo.BrandVO;
+import net.scit.dao.ProductDAO;
+import net.scit.vo.ProductVO;
 
 public class BrandDAOTest {
 
 	public static void main(String[] args) {
 		BrandDAO dao = new BrandDAO();
+		ProductDAO pdao = new ProductDAO();
 			
 		//selecAllBrand() Test ok
 		//List<BrandVO> list =  dao.selectAllBrand();
@@ -32,9 +34,17 @@ public class BrandDAOTest {
 		
 		
 		
-		//deleteBrand() Test 
+		//deleteBrand() Test 보류
 		/*
-		int result = dao.deleteBrand(3);
+		int brandnum = 3;
+		List<ProductVO> plist = pdao.selectAllProduct();
+				
+		for(ProductVO p : plist) {
+			if(p.getBrandnum() == brandnum) 
+				pdao.deleteProduct(p.getProductnum());
+		}
+		
+		int result = dao.deleteBrand(brandnum);
 		System.out.println(result + "개 deleteBrand 성공!");
 		*/
 		
