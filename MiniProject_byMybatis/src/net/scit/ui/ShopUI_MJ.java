@@ -102,11 +102,11 @@ public class ShopUI_MJ {
 	}
 
 	private void mainMenu() {
-		System.out.println("=========[로그인]==========");
+		System.out.println("=========[ 로그인 ]==========");
 		System.out.println("1. 회원가입");
 		System.out.println("2. 로그인");
-		System.out.println("==========================");
-		System.out.print("  > 입력 : ");
+		System.out.println("===========================");
+		System.out.print  ("   입력>   ");
 	}
 
 	private void login() {
@@ -172,6 +172,9 @@ public class ShopUI_MJ {
 			case "4":
 				allUserList();
 				break;
+			case "5" :
+				 loginMenu();
+				 return;
 			case "0":
 				System.out.println("** 프로그램을 종료합니다.");
 				System.exit(0);
@@ -182,19 +185,24 @@ public class ShopUI_MJ {
 	}
 
 	private void allUserList() {
-		System.out.println("                      << 전체 회원 조회 >> ");
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println("   회원번호	     이름	          아이디	          주소	       충전금액  ");
-		System.out.println("-------------------------------------------------------------------");
+		UserVO uvo = new UserVO();
+		System.out.println("                   << 전체 회원 조회 >> ");
+		System.out.println("------------------------------------------------------");
+		System.out.println("   아이디	         이름	      주소	      충전금액  ");
+		System.out.println("------------------------------------------------------");
 		List<UserVO> vo = udao.selectAllUser();
-		System.out.println(vo);
+		vo.forEach(x -> System.out.println(x));
+		
 	}
 
 	private void brandManagement() {
-		BrandVO vo = new BrandVO();
-		System.out.println("=========[거래처 목록]=========");
+		System.out.println("                   << 거래처 목록 >> ");
+		System.out.println("------------------------------------------------------");
+		System.out.println("          거래처명	      담당자	        담당자 메일  ");
+		System.out.println("------------------------------------------------------");
+		List<BrandVO> bvo = bdao.selectAllBrand();
+		bvo.forEach(x -> System.out.println(x));
 
-		System.out.println(vo);
 
 		String choice;
 
@@ -560,6 +568,7 @@ public class ShopUI_MJ {
 		System.out.println("      2. 카테고리 관리");
 		System.out.println("      3. 거래처 관리");
 		System.out.println("      4. 전체 회원 조회");
+		System.out.println("      5. 뒤로 가기");
 		System.out.println("==========================");
 		System.out.print("       선택>  ");
 
@@ -598,10 +607,11 @@ public class ShopUI_MJ {
 	}
 
 	private void goShopping() {
-		System.out.println("==========[ 카테고리 ]==========");
+		System.out.println("=========[ 카테고리 ]========");
 		System.out.println("1. 가구");
 		System.out.println("2. 패브릭");
-		System.out.print("   선택>   ");
+		System.out.println("===========================");
+		System.out.print  ("   선택>   ");
 
 		String choice = scanner.nextLine();
 
@@ -620,20 +630,21 @@ public class ShopUI_MJ {
 	private void fabric() {
 		int productnum, lastnum;
 
-		System.out.println("==========[ 패브릭 ]==========");
-		System.out.println(" Product        Product Name        Price");
-		System.out.println(" Number            ");
+		System.out.println("=========================[ 패브릭 ]=========================");
+		System.out.println();
+		System.out.println("                           상품명                     판매가");
+		System.out.println();
+		System.out.println("==========================================================");
 
 		List<ProductVO> proList = pdao.selectAllProduct();
 
 		for (int i = 0; i < proList.size(); i++) {
 			if (proList.get(i).getCategorynum() == 2) {
-				System.out.println(proList.get(i)); // 이게 전체조회용이라.. 밑에 거로 바꾸기
+				System.out.println(proList.get(i).printList());
 			}
 		}
-		// proList.forEach(x -> System.out.println(x.printList()));
-
-		System.out.println("> 제품 번호 선택 :  ");
+		System.out.println("==========================================================");
+		System.out.print("> 제품 번호 선택 :  ");
 		productnum = Integer.parseInt(scanner.nextLine());
 
 		ProductVO vo = pdao.selectOneProduct(productnum);
@@ -643,16 +654,16 @@ public class ShopUI_MJ {
 			return;
 		}
 
-		System.out.println("===============[" + vo.getProductname() + "]===============");
+		System.out.println("=====================[" + vo.getProductname() + "]=====================");
 		System.out.println(" 브랜드 " + bdao.selectOneBrand(vo.getBrandnum()).getBrandname());
 		System.out.println(" 상품명 " + vo.getProductname());
 		System.out.println(" 판매가 " + vo.getPrice());
 		System.out.println(" 배송방법 : 자체배송");
-		System.out.println("==============================================");
-		System.out.println();
+		System.out.println("===============================================================");
 		System.out.println("1. 구입하기");
 		System.out.println("2. 돌아가기");
-		System.out.println("선택>  ");
+		System.out.println("===============================================================");
+		System.out.print  ("   선택>  ");
 		lastnum = Integer.parseInt(scanner.nextLine());
 
 		switch (lastnum) {
@@ -662,33 +673,35 @@ public class ShopUI_MJ {
 		case 2:
 			return;
 		default:
-			System.out.println("** 다시 입력해주세요.");
+			System.out.println("** 존재하지 않는 제품입니다. 다시 입력해주세요.");
 		}
 	}
 
 	private void furniture() {
 		int productnum, lastnum;
 
-		System.out.println("==========[ 의자 ]==========");
-		System.out.println(" Product        Product Name        Price");
-		System.out.println(" Number            ");
+		System.out.println("========================[ 의  자 ]========================");
+		System.out.println();
+		System.out.println("                         상품명                 판매가 ");
+		System.out.println();
+		System.out.println("=========================================================");
 
 		List<ProductVO> proList = pdao.selectAllProduct();
 
 		for (int i = 0; i < proList.size(); i++) {
 			if (proList.get(i).getCategorynum() == 1) {
-				System.out.println(proList.get(i)); // 이게 전체조회용이라.. 밑에 거로 바꾸기
+				System.out.println(proList.get(i).printList());
 			}
 		}
-		// proList.forEach(x -> System.out.println(x.printList()));
 
-		System.out.println("> 제품 번호 선택 :  ");
+		System.out.println("=========================================================");
+		System.out.print("> 제품 번호 선택 :  ");
 		productnum = Integer.parseInt(scanner.nextLine());
 
 		ProductVO vo = pdao.selectOneProduct(productnum);
 
 		if (vo == null) {
-			System.out.println("** 없는 제품 입니다. 다시 입력해 주세요");
+			System.out.println("** 존재하지 않는 제품입니다. 다시 입력해 주세요");
 			return;
 		}
 
@@ -698,9 +711,9 @@ public class ShopUI_MJ {
 		System.out.println(" 판매가 " + vo.getPrice());
 		System.out.println(" 배송방법 : 자체배송");
 		System.out.println("==============================================");
-		System.out.println();
 		System.out.println("1. 구입하기");
 		System.out.println("2. 돌아가기");
+		System.out.println("==============================================");
 		System.out.println("선택>  ");
 		lastnum = Integer.parseInt(scanner.nextLine());
 
@@ -720,8 +733,8 @@ public class ShopUI_MJ {
 		UserVO user = udao.selectOneUser("harry");
 		ProductVO product = pdao.selectOneProduct(productnum);
 		InventoryVO ivo = idao.selectOneInventory(productnum);
-		
-		// stock이 0일때 판매금지(RETURN) // 추가 예정 
+
+		// stock이 0일때 판매금지(RETURN) // 추가 예정
 		if (idao.selectOneInventory(productnum).getStock() <= 0) {
 			System.out.println("** 죄송합니다. 이 상품은 현재 품절입니다. 다른 상품으로 다시 선택해주세요.");
 			return;
@@ -729,7 +742,7 @@ public class ShopUI_MJ {
 
 		// 유저가 살 돈이 있는지 확인
 		if (user.getAmount() < product.getPrice()) {
-			System.out.println("** 잔고가 모자랍니다. 충전해 주세요.");
+			System.out.println("** 잔고가 모자랍니다. 충전부탁드려요.");
 			return;
 		}
 
@@ -739,7 +752,7 @@ public class ShopUI_MJ {
 		// db반영
 		int result = udao.changeAmount(user);
 		if (result != -1) {
-			System.out.println(" * 구매해주셔서 감사합니다 최대한 빠르게 배송해드릴게요 ^-^*");
+			System.out.println(" * 구매해주셔서 감사합니다 최대한 빠르게 배송해드릴게요 ^-^ *");
 			System.out.println(user.getUsrname() + "님의 충전금액에서 " + product.getPrice() + "원이 차감되었습니다. 현재 잔액은 "
 					+ user.getAmount() + "원 입니다.");
 		}
@@ -760,7 +773,7 @@ public class ShopUI_MJ {
 		System.out.println("4. 탈퇴하기");
 		System.out.println("5. 캐쉬 충전");
 		System.out.println("===========================");
-		System.out.print("   선택>   ");
+		System.out.print  ("   선택>   ");
 	}
 
 }

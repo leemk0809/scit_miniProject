@@ -52,8 +52,9 @@ public class BrandVO {
 
 	@Override
 	public String toString() {
-		return "BrandVO [brandnum=" + brandnum + ", brandname=" + brandname + ", managername=" + managername
-				+ ", email=" + email + "]";
+		String temp = String.format("%4d \t %s %5s %25s", 
+									brandnum, brandname, managername, email);
+		return temp;
 	}
 
 }

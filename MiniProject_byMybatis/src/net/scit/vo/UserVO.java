@@ -11,7 +11,6 @@ public class UserVO {
 		super();
 	}
 
-	
 	public UserVO(String usrid, String passwd, String usrname, String address, int amount) {
 		super();
 		this.usrid = usrid;
@@ -20,7 +19,7 @@ public class UserVO {
 		this.address = address;
 		this.amount = amount;
 	}
-	
+
 	public UserVO(String usrid, String passwd) {
 		super();
 		this.usrid = usrid;
@@ -69,8 +68,15 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		return "UserVO [usrid=" + usrid + ", passwd=" + passwd + ", name=" + usrname + ", address=" + address + ", amount="
-				+ amount + "]";
+		String temp = String.format("%8s %10s %10s %,17d¿ø %n", 
+									usrid, usrname, address, amount);
+		return temp;
 	}
+
+	public String printList() {
+		String temp = String.format("%10s %10s %10s %10s %,10d¿ø %n", usrid, passwd, usrname, address, amount);
+		return temp;
+	}
+	
 
 }

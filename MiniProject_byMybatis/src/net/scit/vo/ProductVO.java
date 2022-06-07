@@ -76,7 +76,7 @@ public class ProductVO {
 	}
 
 	public String printList() {
-		String temp = String.format("%5d   |  %s  | %,d¿ø", productnum, productname, price);
+		String temp = String.format("%5d   |  %30s  | %,d¿ø", productnum, productname, price);
 		return temp;
 	}
 
