@@ -32,10 +32,11 @@ public class BrandDAOTest {
 		
 		
 		
-		//deleteBrand() Test
-		/*int result = dao.deleteBrand(3);
-		System.out.println(result + "개 deleteBrand 성공!");*/
-		
+		//deleteBrand() Test 
+		/*
+		int result = dao.deleteBrand(3);
+		System.out.println(result + "개 deleteBrand 성공!");
+		*/
 		
 		
 	}

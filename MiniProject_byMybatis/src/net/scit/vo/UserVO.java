@@ -68,13 +68,13 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		String temp = String.format("%8s %10s %10s %,17d원 %n", 
+		String temp = String.format("\t %s \t %10s \t %10s  \t %,d원", 
 									usrid, usrname, address, amount);
 		return temp;
 	}
 
 	public String printList() {
-		String temp = String.format("%10s %10s %10s %10s %,10d원 %n", usrid, passwd, usrname, address, amount);
+		String temp = String.format("%10s %10s %10s %10s %,10d원", usrid, passwd, usrname, address, amount);
 		return temp;
 	}
 	

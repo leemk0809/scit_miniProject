@@ -70,7 +70,7 @@ public class ProductVO {
 	@Override
 	public String toString() {
 		
-		String temp = String.format("%3d %9d %9d |%s %,3d¿ø %n", 
+		String temp = String.format("%3d %9d %9d |%s %,3d¿ø", 
 									brandnum, categorynum, productnum, productname, price);
 		return temp;
 	}

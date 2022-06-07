@@ -1,11 +1,11 @@
 package net.scit.main;
 
-import net.scit.ui.ShopUI_MJ;
+import net.scit.ui.ShopUI_SUM;
 
 public class ShopMain {
 
 	public static void main(String[] args) {
-		new ShopUI_MJ();
+		new ShopUI_SUM();
 	}
 
 }
